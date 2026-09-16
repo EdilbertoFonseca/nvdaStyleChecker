@@ -1,0 +1,291 @@
+# -*- coding: UTF-8 -*-
+
+"""
+SCons build configuration for appTemplate.
+
+This file provides the build system for Python desktop applications
+created from the appTemplate project.
+
+The configuration is responsible for:
+
+* Reading project information from buildVars.py.
+* Building the application with PyInstaller.
+* Extracting translatable strings from Python source files.
+* Generating the gettext POT file.
+* Updating the project's PO translation file.
+* Cleaning generated build files.
+
+The localization workflow is inspired by the NVDA Add-on Template
+SConstruct, but adapted for a standalone Python/wxPython application.
+
+Copyright (C) 2025-2026 Edilberto Fonseca
+This file is covered by the GNU General Public License.
+See the file COPYING for more details or visit:
+https://www.gnu.org/licenses/gpl-2.0.html
+"""
+
+import glob
+import os
+import shutil
+import sys
+
+import buildVars  # NOQA: E402
+
+
+# ----------------------------------------------------------------------
+# SCons environment
+# ----------------------------------------------------------------------
+
+env = Environment()
+
+
+# ----------------------------------------------------------------------
+# Project information
+# ----------------------------------------------------------------------
+
+executable_name = buildVars.app_info['app_name']
+script_name = buildVars.app_info['script_name']
+spec_file = buildVars.app_info['spec_file']
+app_version = buildVars.app_info['app_version']
+
+print(
+	f">>> Iniciando Build: "
+	f"{executable_name} v{app_version}"
+)
+
+
+# ----------------------------------------------------------------------
+# File validation
+# ----------------------------------------------------------------------
+
+def check_file_exists(file_path):
+	"""Check whether a required file exists."""
+
+	if not os.path.exists(file_path):
+		print(
+			f'ERROR: {file_path} não encontrado!'
+		)
+		sys.exit(1)
+
+
+check_file_exists(script_name)
+check_file_exists(spec_file)
+
+
+# ----------------------------------------------------------------------
+# Build application
+# ----------------------------------------------------------------------
+
+def build_executable(target, source, env):
+	"""
+	Build the application using PyInstaller.
+
+	PyInstaller receives the project specification file defined in
+	buildVars.py. The Python interpreter running SCons is used to
+	invoke PyInstaller.
+	"""
+
+	python_exec = sys.executable
+
+	command = (
+		f'"{python_exec}" -m PyInstaller '
+		f'--noconfirm --clean "{spec_file}"'
+	)
+
+	return env.Execute(command)
+
+
+env.Command(
+	executable_name,
+	script_name,
+	build_executable,
+)
+
+
+# ----------------------------------------------------------------------
+# Localization
+# ----------------------------------------------------------------------
+
+LOCALE_DIR = os.path.join(
+	'src',
+	'locale',
+)
+
+POT_FILE = os.path.join(
+	LOCALE_DIR,
+	'main.pot',
+)
+
+PO_FILE = os.path.join(
+	LOCALE_DIR,
+	'main.po',
+)
+
+
+# All Python source files are scanned for translatable strings.
+#
+# buildVars.py is outside the src directory, but it can also contain
+# translatable strings such as app_summary and app_description.
+source_files = [
+	'buildVars.py',
+]
+
+source_files.extend(
+	glob.glob(
+		os.path.join(
+			'src',
+			'**',
+			'*.py',
+		),
+		recursive=True,
+	)
+)
+
+
+# ----------------------------------------------------------------------
+# Generate POT file
+# ----------------------------------------------------------------------
+
+def generate_pot(target, source, env):
+	"""
+	Generate the gettext POT file.
+
+	xgettext extracts strings marked with the '_' function from all
+	Python source files in the project.
+
+	The resulting template is stored as:
+
+		src/locale/main.pot
+	"""
+
+	xgettext = shutil.which('xgettext')
+
+	if not xgettext:
+		print(
+			'ERROR: xgettext was not found in PATH.'
+		)
+		print(
+			'Install GNU gettext or add xgettext to PATH.'
+		)
+		return 1
+
+	command = (
+		f'"{xgettext}" '
+		'--language=Python '
+		'--from-code=UTF-8 '
+		'--keyword=_ '
+		'--sort-by-file '
+		f'--output="{POT_FILE}" '
+		+ ' '.join(
+			f'"{file}"'
+			for file in source_files
+		)
+	)
+
+	print(
+		f'>>> Generating translation template: '
+		f'{POT_FILE}'
+	)
+
+	return env.Execute(command)
+
+
+pot_target = env.Command(
+	POT_FILE,
+	source_files,
+	generate_pot,
+)
+
+
+# ----------------------------------------------------------------------
+# Update PO file
+# ----------------------------------------------------------------------
+
+def update_po(target, source, env):
+	"""
+	Update the PO file using the generated POT file.
+
+	msgmerge preserves existing translations and adds new messages
+	found in the current POT file.
+
+	If main.po does not exist yet, the POT file is copied to main.po.
+	"""
+
+	if not os.path.exists(PO_FILE):
+		print(
+			f'>>> Creating translation file: {PO_FILE}'
+		)
+
+		try:
+			shutil.copyfile(
+				POT_FILE,
+				PO_FILE,
+			)
+		except OSError as error:
+			print(
+				f'ERROR: Could not create {PO_FILE}: '
+				f'{error}'
+			)
+			return 1
+
+		return 0
+
+	msgmerge = shutil.which('msgmerge')
+
+	if not msgmerge:
+		print(
+			'ERROR: msgmerge was not found in PATH.'
+		)
+		print(
+			'Install GNU gettext or add msgmerge to PATH.'
+		)
+		return 1
+
+	command = (
+		f'"{msgmerge}" '
+		'--update '
+		'--backup=none '
+		f'"{PO_FILE}" '
+		f'"{POT_FILE}"'
+	)
+
+	print(
+		f'>>> Updating translation file: '
+		f'{PO_FILE}'
+	)
+
+	return env.Execute(command)
+
+
+po_target = env.Command(
+	PO_FILE,
+	POT_FILE,
+	update_po,
+)
+
+
+# ----------------------------------------------------------------------
+# POT alias
+# ----------------------------------------------------------------------
+
+# "scons pot" generates main.pot and updates main.po.
+env.Alias(
+	'pot',
+	[
+		pot_target,
+		po_target,
+	])
+
+
+# ----------------------------------------------------------------------
+# Clean
+# ----------------------------------------------------------------------
+
+env.Clean(
+	executable_name,
+	[
+		'dist',
+		'build',
+		'.sconsign.dblite',
+	],
+)

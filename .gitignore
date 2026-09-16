@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.venv/
+.env
+
+# PyInstaller
+dist/
+build/
+*.spec
+!install/pyinstaller/appTemplate.spec
+
+# Editor files
+*.swp
+*.swo
+*.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Outros
+*.egg-info/
+*.egg
+*.txt
+*.db

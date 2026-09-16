@@ -1,0 +1,174 @@
+[project]
+name = "apptemplate"
+version = "1.1.0"
+description = "A template for creating Python desktop applications."
+requires-python = "==3.13.*"
+dependencies = [
+	"wxPython>=4.2.3,<5",
+]
+
+[dependency-groups]
+dev = [
+	"pyinstaller>=6.11,<7",
+	"prek>=0.4.8,<0.5",
+	"pyright[nodejs]>=1.1.407,<1.2",
+	"ruff>=0.14.5,<0.15",
+	"scons>=4.10.1,<5",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.ruff]
+line-length = 110
+
+builtins = [
+	# translation lookup
+	"_",
+	# translation lookup
+	"ngettext",
+	# translation lookup
+	"pgettext",
+	# translation lookup
+	"npgettext",
+]
+
+include = [
+	"*.py",
+	"sconstruct",
+]
+
+exclude = [
+	".git",
+	"__pycache__",
+	"build",
+	"dist",
+	"install",
+]
+
+[tool.ruff.format]
+indent-style = "tab"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.ruff.lint]
+ignore = [
+	# indentation contains tabs
+	"W191",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# sconstruct contains many inbuilt functions not recognised by the lint,
+# so ignore F821.
+"sconstruct" = ["F821"]
+
+[tool.pyright]
+pythonPlatform = "Windows"
+typeCheckingMode = "strict"
+
+include = [
+	"**/*.py",
+]
+
+exclude = [
+	"sconstruct",
+	".git",
+	"__pycache__",
+]
+
+extraPaths = [
+	"./src",
+]
+
+analyzeUnannotatedFunctions = true
+deprecateTypingAliases = true
+
+strictParameterNoneValue = true
+strictListInference = true
+strictDictionaryInference = true
+strictSetInference = true
+
+reportAbstractUsage = true
+reportArgumentType = true
+reportAssertAlwaysTrue = true
+reportAssertTypeFailure = true
+reportAssignmentType = true
+reportAttributeAccessIssue = true
+reportCallInDefaultInitializer = true
+reportCallIssue = true
+reportConstantRedefinition = true
+reportDuplicateImport = true
+reportFunctionMemberAccess = true
+reportGeneralTypeIssues = true
+reportImplicitOverride = true
+reportImplicitStringConcatenation = true
+reportImportCycles = true
+reportIncompatibleMethodOverride = true
+reportIncompatibleVariableOverride = true
+reportIncompleteStub = true
+reportInconsistentConstructor = true
+reportInconsistentOverload = true
+reportIndexIssue = true
+reportInvalidStringEscapeSequence = true
+reportInvalidStubStatement = true
+reportInvalidTypeArguments = true
+reportInvalidTypeForm = true
+reportInvalidTypeVarUse = true
+reportMatchNotExhaustive = true
+reportMissingImports = true
+reportMissingModuleSource = true
+reportMissingParameterType = true
+reportMissingSuperCall = true
+reportMissingTypeArgument = true
+reportNoOverloadImplementation = true
+reportOperatorIssue = true
+reportOptionalCall = true
+reportOptionalContextManager = true
+reportOptionalIterable = true
+reportOptionalMemberAccess = true
+reportOptionalOperand = true
+reportOptionalSubscript = true
+reportOverlappingOverload = true
+reportPossiblyUnboundVariable = true
+reportPrivateImportUsage = true
+reportPrivateUsage = true
+reportPropertyTypeMismatch = true
+reportRedeclaration = true
+reportReturnType = true
+reportSelfClsParameterName = true
+reportShadowedImports = true
+reportTypeCommentUsage = true
+reportTypedDictNotRequiredAccess = true
+reportUnboundVariable = true
+reportUnknownArgumentType = true
+reportUnknownLambdaType = true
+reportUnknownMemberType = true
+reportUnknownParameterType = true
+reportUnknownVariableType = true
+reportUnnecessaryCast = true
+reportUnnecessaryComparison = true
+reportUnnecessaryContains = true
+reportUnnecessaryIsInstance = true
+reportUnnecessaryTypeIgnoreComment = true
+reportUnsupportedDunderAll = true
+reportUntypedBaseClass = true
+reportUntypedClassDecorator = true
+reportUntypedFunctionDecorator = true
+reportUntypedNamedTuple = true
+reportUnusedCallResult = true
+reportUnusedClass = true
+reportUnusedCoroutine = true
+reportUnusedExcept = true
+reportUnusedExpression = true
+reportUnusedFunction = true
+reportUnusedImport = true
+reportUnusedVariable = true
+reportWildcardImportFromLibrary = true
+
+reportDeprecated = true
+
+reportMissingTypeStubs = false
+
+# Bad rules
+# These are sorted alphabetically and should be enabled and moved to compliant rules section when resolved.
