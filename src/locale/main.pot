@@ -1,0 +1,372 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-16 16:26-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildVars.py:33
+msgid "System for code validations"
+msgstr ""
+
+#: buildVars.py:35
+msgid "System for checking add-on code and performing validation"
+msgstr ""
+
+#: src\main.py:122
+msgid "Syntax error at line {line_no}: {error_msg}"
+msgstr ""
+
+#: src\main.py:135
+msgid "line {line_no}: class '{name}'"
+msgstr ""
+
+#: src\main.py:159
+msgid "line {line_no}: global constant '{name}'"
+msgstr ""
+
+#: src\main.py:185
+msgid "line {line_no}: function '{name}'"
+msgstr ""
+
+#: src\main.py:196
+msgid "line {line_no}: argument '{name}'"
+msgstr ""
+
+#: src\main.py:209
+msgid "line {line_no}: variable '{name}'"
+msgstr ""
+
+#: src\main.py:237
+msgid "line {line_no}: contains space(s) in indentation"
+msgstr ""
+
+#: src\main.py:243
+msgid "All indented lines use tabs."
+msgstr ""
+
+#: src\main.py:245
+msgid "The file has no indented lines."
+msgstr ""
+
+#: src\main.py:249
+msgid "Empty file."
+msgstr ""
+
+#: src\main.py:268
+msgid "Header identified."
+msgstr ""
+
+#: src\main.py:270
+msgid "No standard header identified."
+msgstr ""
+
+#: src\main.py:285
+msgid "UTF-8 encoding declaration found."
+msgstr ""
+
+#: src\main.py:288
+msgid "UTF-8 encoding declaration not found."
+msgstr ""
+
+#: src\main.py:313
+msgid "line {line_no}: \"{value}...\""
+msgstr ""
+
+#: src\main.py:323
+msgid "line {line_no}: {arg}=\"{value}...\""
+msgstr ""
+
+#: src\main.py:357
+msgid "STYLE ANALYSIS - PYTHON FILE (.PY)"
+msgstr ""
+
+#: src\main.py:359 src\main.py:499
+msgid "Analyzed file: {file_path}\n"
+msgstr ""
+
+#: src\main.py:361
+msgid "Classes in PascalCase"
+msgstr ""
+
+#: src\main.py:362
+msgid "Global constants in UPPER_SNAKE_CASE"
+msgstr ""
+
+#: src\main.py:363
+msgid "Functions and variables in camelCase"
+msgstr ""
+
+#: src\main.py:364
+msgid "Indentation using tabs"
+msgstr ""
+
+#: src\main.py:365
+msgid "Presence of standard header"
+msgstr ""
+
+#: src\main.py:366
+msgid "UTF-8 encoding declaration"
+msgstr ""
+
+#: src\main.py:367
+msgid "Strings marked for translation _()"
+msgstr ""
+
+#: src\main.py:370
+msgid "Score: {points}/{total} points"
+msgstr ""
+
+#: src\main.py:371
+msgid "Compliance: {percentage:.2f}%"
+msgstr ""
+
+#: src\main.py:374
+msgid "ANALYSIS DETAILS"
+msgstr ""
+
+#: src\main.py:378
+msgid ""
+"\n"
+"Class names not following PascalCase:"
+msgstr ""
+
+#: src\main.py:383
+msgid ""
+"\n"
+"Global constants not following UPPER_SNAKE_CASE:"
+msgstr ""
+
+#: src\main.py:388
+msgid ""
+"\n"
+"Names not following camelCase:"
+msgstr ""
+
+#: src\main.py:393
+msgid ""
+"\n"
+"Strings in functions/UI without _() translation wrappers:"
+msgstr ""
+
+#: src\main.py:397
+msgid ""
+"\n"
+"Indentation:"
+msgstr ""
+
+#: src\main.py:401
+msgid ""
+"\n"
+"Header:\n"
+"  - {header_detail}"
+msgstr ""
+
+#: src\main.py:402
+msgid ""
+"\n"
+"Encoding:\n"
+"  - {utf8_detail}"
+msgstr ""
+
+#: src\main.py:407
+msgid "FAILED (+0)"
+msgstr ""
+
+#: src\main.py:407
+msgid "PASSED (+1)"
+msgstr ""
+
+#: src\main.py:422
+msgid "File not found: {file_path}"
+msgstr ""
+
+#: src\main.py:430
+msgid "Error reading file: {err}"
+msgstr ""
+
+#: src\main.py:432
+msgid "Error opening file: {err}"
+msgstr ""
+
+#: src\main.py:477
+msgid "Missing or empty required key: '{key}' ({description})"
+msgstr ""
+
+#: src\main.py:487
+msgid ""
+"Invalid format in '{key}': '{value}'. Expected YYYY.R pattern (e.g., 2023.3)"
+msgstr ""
+
+#: src\main.py:497
+msgid "MANIFEST VALIDATION (MANIFEST.INI)"
+msgstr ""
+
+#: src\main.py:502
+msgid "STATUS: COMPLIANT - The manifest contains all required keys.\n"
+msgstr ""
+
+#: src\main.py:504
+msgid "STATUS: WARNING - Found {count} issue(s).\n"
+msgstr ""
+
+#: src\main.py:506
+msgid "IDENTIFIED KEYS:"
+msgstr ""
+
+#: src\main.py:514
+msgid "ISSUES FOUND"
+msgstr ""
+
+#: src\main.py:529
+msgid "NVDA Add-on Checker - Code and Manifest Analyzer"
+msgstr ""
+
+#: src\main.py:543
+msgid "File &Path (.py or manifest.ini):"
+msgstr ""
+
+#: src\main.py:545
+msgid "&Browse..."
+msgstr ""
+
+#: src\main.py:555
+msgid "&Analyze Code (.py)"
+msgstr ""
+
+#: src\main.py:556
+msgid "Validate &Manifest"
+msgstr ""
+
+#: src\main.py:557
+msgid "&Copy Report"
+msgstr ""
+
+#: src\main.py:558
+msgid "C&lear"
+msgstr ""
+
+#: src\main.py:559
+msgid "E&xit"
+msgstr ""
+
+#: src\main.py:569
+msgid "Analysis &Report:"
+msgstr ""
+
+#: src\main.py:617
+msgid "All supported (*.py; manifest.ini)|*.py;manifest.ini|"
+msgstr ""
+
+#: src\main.py:618
+msgid "Python files (*.py)|*.py|"
+msgstr ""
+
+#: src\main.py:619
+msgid "NVDA Manifest (manifest.ini)|manifest.ini|"
+msgstr ""
+
+#: src\main.py:620
+msgid "All files (*.*)|*.*"
+msgstr ""
+
+#: src\main.py:624
+msgid "Select file to analyze"
+msgstr ""
+
+#: src\main.py:645
+msgid "Please select or enter the path to a .py file."
+msgstr ""
+
+#: src\main.py:646
+msgid "Missing Path"
+msgstr ""
+
+#: src\main.py:656
+msgid ""
+"The specified file was not found:\n"
+"{file_path}"
+msgstr ""
+
+#: src\main.py:659
+msgid "File Not Found"
+msgstr ""
+
+#: src\main.py:668
+msgid ""
+"The selected file is not a Python file (.py).\n"
+"To analyze manifests, use the 'Validate Manifest' button."
+msgstr ""
+
+#: src\main.py:670
+msgid "Invalid File"
+msgstr ""
+
+#: src\main.py:682
+msgid ""
+"FILE ANALYSIS FAILED\n"
+"\n"
+"{error_msg}"
+msgstr ""
+
+#: src\main.py:687
+msgid ""
+"Syntax error found in the Python file.\n"
+"\n"
+"{error_msg}"
+msgstr ""
+
+#: src\main.py:690
+msgid "Syntax Error"
+msgstr ""
+
+#: src\main.py:714
+msgid ""
+"Could not locate the 'manifest.ini' file in this folder:\n"
+"{folder}\n"
+"\n"
+"Ensure the add-on manifest is saved in the same directory."
+msgstr ""
+
+#: src\main.py:718
+msgid "Manifest Not Found"
+msgstr ""
+
+#: src\main.py:730
+msgid ""
+"MANIFEST READING FAILED\n"
+"\n"
+"{error_msg}"
+msgstr ""
+
+#: src\main.py:736
+msgid "Manifest Error"
+msgstr ""
+
+#: src\main.py:750
+msgid "No report available to copy."
+msgstr ""
+
+#: src\main.py:751
+msgid "Information"
+msgstr ""
+
+#: src\main.py:761
+msgid "Report copied to the clipboard successfully!"
+msgstr ""
+
+#: src\main.py:762
+msgid "Success"
+msgstr ""
