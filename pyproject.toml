@@ -34,8 +34,8 @@ builtins = [
 ]
 
 include = [
-	"*.py",
-	"sconstruct",
+	"**/*.py",
+	"SConstruct",
 ]
 
 exclude = [
@@ -49,19 +49,22 @@ exclude = [
 [tool.ruff.format]
 indent-style = "tab"
 
-[tool.ruff.lint.mccabe]
-max-complexity = 15
-
 [tool.ruff.lint]
+extend-select = [
+	"C901",
+]
+
 ignore = [
 	# indentation contains tabs
 	"W191",
 ]
 
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
 [tool.ruff.lint.per-file-ignores]
-# sconstruct contains many inbuilt functions not recognised by the lint,
-# so ignore F821.
-"sconstruct" = ["F821"]
+# SConstruct contains many built-in functions not recognized by the lint.
+"SConstruct" = ["F821"]
 
 [tool.pyright]
 pythonPlatform = "Windows"
@@ -72,7 +75,6 @@ include = [
 ]
 
 exclude = [
-	"sconstruct",
 	".git",
 	"__pycache__",
 ]
@@ -89,86 +91,5 @@ strictListInference = true
 strictDictionaryInference = true
 strictSetInference = true
 
-reportAbstractUsage = true
-reportArgumentType = true
-reportAssertAlwaysTrue = true
-reportAssertTypeFailure = true
-reportAssignmentType = true
-reportAttributeAccessIssue = true
-reportCallInDefaultInitializer = true
-reportCallIssue = true
-reportConstantRedefinition = true
-reportDuplicateImport = true
-reportFunctionMemberAccess = true
-reportGeneralTypeIssues = true
-reportImplicitOverride = true
-reportImplicitStringConcatenation = true
-reportImportCycles = true
-reportIncompatibleMethodOverride = true
-reportIncompatibleVariableOverride = true
-reportIncompleteStub = true
-reportInconsistentConstructor = true
-reportInconsistentOverload = true
-reportIndexIssue = true
-reportInvalidStringEscapeSequence = true
-reportInvalidStubStatement = true
-reportInvalidTypeArguments = true
-reportInvalidTypeForm = true
-reportInvalidTypeVarUse = true
-reportMatchNotExhaustive = true
-reportMissingImports = true
-reportMissingModuleSource = true
-reportMissingParameterType = true
-reportMissingSuperCall = true
-reportMissingTypeArgument = true
-reportNoOverloadImplementation = true
-reportOperatorIssue = true
-reportOptionalCall = true
-reportOptionalContextManager = true
-reportOptionalIterable = true
-reportOptionalMemberAccess = true
-reportOptionalOperand = true
-reportOptionalSubscript = true
-reportOverlappingOverload = true
-reportPossiblyUnboundVariable = true
-reportPrivateImportUsage = true
-reportPrivateUsage = true
-reportPropertyTypeMismatch = true
-reportRedeclaration = true
-reportReturnType = true
-reportSelfClsParameterName = true
-reportShadowedImports = true
-reportTypeCommentUsage = true
-reportTypedDictNotRequiredAccess = true
-reportUnboundVariable = true
-reportUnknownArgumentType = true
-reportUnknownLambdaType = true
-reportUnknownMemberType = true
-reportUnknownParameterType = true
-reportUnknownVariableType = true
-reportUnnecessaryCast = true
-reportUnnecessaryComparison = true
-reportUnnecessaryContains = true
-reportUnnecessaryIsInstance = true
-reportUnnecessaryTypeIgnoreComment = true
-reportUnsupportedDunderAll = true
-reportUntypedBaseClass = true
-reportUntypedClassDecorator = true
-reportUntypedFunctionDecorator = true
-reportUntypedNamedTuple = true
-reportUnusedCallResult = true
-reportUnusedClass = true
-reportUnusedCoroutine = true
-reportUnusedExcept = true
-reportUnusedExpression = true
-reportUnusedFunction = true
-reportUnusedImport = true
-reportUnusedVariable = true
-reportWildcardImportFromLibrary = true
-
 reportDeprecated = true
-
 reportMissingTypeStubs = false
-
-# Bad rules
-# These are sorted alphabetically and should be enabled and moved to compliant rules section when resolved.

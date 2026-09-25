@@ -80,19 +80,40 @@ jobs:
             Write-Error "dist directory was not created."
           }
 
+      - name: Compress AppTemplate directory
+        shell: pwsh
+        run: |
+          # Gets the name of the current repository (e.g., MyNewApp, AppTemplate, etc.)
+          $repoName = '${{ github.event.repository.name }}'
+
+          # Define the version based on the Tag or the short SHA Commit
+          if ('${{ github.ref_type }}' -eq 'tag') {
+            $version = '${{ github.ref_name }}'
+          } else {
+            $version = '${{ github.sha }}'.Substring(0, 7)
+          }
+
+          $zipName = "$repoName-$version.zip"
+          Write-Host "Creating zip package: $zipName"
+
+          # Compresses the dist/AppTemplate folder into a dynamic .zip file.
+          Compress-Archive -Path dist/AppTemplate -DestinationPath $zipName -Force
+
+          # Save the file name for use in the next steps.
+          "ZIP_NAME=$zipName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
       - name: Upload application artifact
         uses: actions/upload-artifact@v7
         with:
-          name: appTemplate-${{ github.sha }}
-          path: dist/**
+          name: ${{ env.ZIP_NAME }}
+          path: ${{ env.ZIP_NAME }}
           if-no-files-found: error
 
       - name: Create GitHub Release
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v3
         with:
-          files: |
-            dist/**
+          files: ${{ env.ZIP_NAME }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

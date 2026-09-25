@@ -14,7 +14,7 @@ ENV/
 dist/
 build/
 *.spec
-!install/pyinstaller/appTemplate.spec
+!install/pyinstaller/main.spec
 
 # Editor files
 *.swp

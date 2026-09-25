@@ -16,6 +16,7 @@ All AI-generated code was manually reviewed and tested by the author.
 Created on: 13/09/2026
 """
 
+
 # Function copied from: AddonTemplate (NVDA add-on)
 # Original source: utils.py
 # License: GNU GPL v2.0 – https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,16 +28,17 @@ def _(arg: str) -> str:
 	"""
 	return arg
 
+
 # Application information
 app_info = {
 	"app_name": "nvdaStyleChecker,",
 	"app_summary": _("System for code validations"),
 	"app_description": _(
-		"System for checking add-on code and performing validation"
+		"System for checking add-on code and performing validation",
 	),
 	"app_version": "1.1.0",
 	"app_author": "Edilberto Fonseca <edilberto.fonseca@outlook.com>",
-	"spec_file": "install/pyinstaller/nvdaStyleChecker.spec",
+	"spec_file": "install/pyinstaller/main.spec",
 	"script_name": "src/main.py",
 }
 

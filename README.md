@@ -1,9 +1,9 @@
 # Executive Summary & Technical Report: NVDA Style & Manifest Checker
 
-**Project:** NVDA Add-on Style & Manifest Checker (GUI)  
-**Lead Developer:** Edilberto Fonseca  
-**Version:** 1.0 (Production Release Candidate)  
-**Target Environment:** Microsoft Windows / NVDA Screen Reader Ecosystem  
+**Project:** NVDA Add-on Style & Manifest Checker (GUI)
+**Lead Developer:** Edilberto Fonseca
+**Version:** 1.0 (Production Release Candidate)
+**Target Environment:** Microsoft Windows / NVDA Screen Reader Ecosystem
 
 ---
 

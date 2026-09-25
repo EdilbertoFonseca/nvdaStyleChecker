@@ -29,8 +29,10 @@ import os
 import shutil
 import sys
 
-import buildVars  # NOQA: E402
+# Prevent Python from writing .pyc files
+sys.dont_write_bytecode = True
 
+import buildVars  # NOQA: E402
 
 # ----------------------------------------------------------------------
 # SCons environment

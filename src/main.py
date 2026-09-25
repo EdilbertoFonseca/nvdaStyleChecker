@@ -14,16 +14,13 @@ All AI-generated code was manually reviewed and tested by the author.
 -------------------------------------------------------------------------
 
 Created on: 10/09/2026
-"""
 
-"""
 NVDA Add-on Style & Manifest Checker - Graphical User Interface (GUI).
 Accessible interface built with wxPython for NVDA screen reader users.
 """
 
 import ast
 import gettext
-import io
 import re
 
 # --- Internationalization (i18n) Setup ---
@@ -33,7 +30,7 @@ from pathlib import Path
 import wx
 
 # --- Locale Path Configuration ---
-if getattr(sys, 'frozen', False):
+if getattr(sys, "frozen", False):
 	# When run via PyInstaller (automatically accesses the internal / _internal folder)
 	BASE_DIR = Path(sys._MEIPASS)
 else:
@@ -48,8 +45,10 @@ try:
 	translation = gettext.translation(DOMAIN, localedir=LOCALE_DIR, languages=["pt_BR"], fallback=False)
 	_ = translation.gettext
 except Exception:
+
 	def _(message):
-		return message# --- Regular Expression Patterns ---
+		return message  # --- Regular Expression Patterns ---
+
 
 CAMEL_CASE_PATTERN = re.compile(r"^[a-z]+(?:[A-Z0-9][a-z0-9]*)*$")
 PASCAL_CASE_PATTERN = re.compile(r"^[A-Z][a-zA-Z0-9]*$")
@@ -57,7 +56,12 @@ UPPER_SNAKE_CASE_PATTERN = re.compile(r"^[A-Z0-9]+(?:_[A-Z0-9]+)*$")
 
 # Common Python/NVDA parameters and names to ignore during camelCase check
 IGNORED_ARGUMENTS = {
-	"self", "cls", "decorated_cls", "wrapped_func", "fn", "func"
+	"self",
+	"cls",
+	"decorated_cls",
+	"wrapped_func",
+	"fn",
+	"func",
 }
 
 # Required keys in NVDA's manifest.ini file
@@ -107,7 +111,8 @@ class NVDAStyleChecker:
 			self.source = self.file_path.read_text(encoding="utf-8")
 		except UnicodeDecodeError:
 			self.source = self.file_path.read_text(
-				encoding="latin-1", errors="replace"
+				encoding="latin-1",
+				errors="replace",
 			)
 		self.lines = self.source.splitlines()
 
@@ -120,7 +125,8 @@ class NVDAStyleChecker:
 			return True, None
 		except SyntaxError as error:
 			err_msg = _("Syntax error at line {line_no}: {error_msg}").format(
-				line_no=error.lineno, error_msg=error.msg
+				line_no=error.lineno,
+				error_msg=error.msg,
 			)
 			return False, err_msg
 
@@ -133,8 +139,9 @@ class NVDAStyleChecker:
 				if not PASCAL_CASE_PATTERN.fullmatch(node.name):
 					invalid_names.add(
 						_("line {line_no}: class '{name}'").format(
-							line_no=node.lineno, name=node.name
-						)
+							line_no=node.lineno,
+							name=node.name,
+						),
 					)
 		sorted_details = sorted(list(invalid_names))
 		self.details["pascal_case"] = sorted_details
@@ -157,8 +164,9 @@ class NVDAStyleChecker:
 						if not UPPER_SNAKE_CASE_PATTERN.fullmatch(var_name):
 							invalid_names.add(
 								_("line {line_no}: global constant '{name}'").format(
-									line_no=node.lineno, name=var_name
-								)
+									line_no=node.lineno,
+									name=var_name,
+								),
 							)
 		sorted_details = sorted(list(invalid_names))
 		self.details["upper_snake_case"] = sorted_details
@@ -167,53 +175,104 @@ class NVDAStyleChecker:
 	def check_camel_case(self):
 		if self.tree is None:
 			return
+
 		invalid_names = set()
+
 		for node in ast.walk(self.tree):
 			if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-				name = node.name
-				if name.startswith("__") and name.endswith("__"):
-					continue
-
-				check_name = name
-				if check_name.startswith("script_"):
-					check_name = check_name[7:]
-				elif check_name.startswith("event_"):
-					check_name = check_name[6:]
-
-				if not CAMEL_CASE_PATTERN.fullmatch(check_name):
-					invalid_names.add(
-						_("line {line_no}: function '{name}'").format(
-							line_no=node.lineno, name=name
-						)
-					)
-
-				for arg in node.args.args:
-					arg_name = arg.arg
-					if arg_name in IGNORED_ARGUMENTS or arg_name.startswith("_"):
-						continue
-					if not CAMEL_CASE_PATTERN.fullmatch(arg_name):
-						invalid_names.add(
-							_("line {line_no}: argument '{name}'").format(
-								line_no=arg.lineno, name=arg_name
-							)
-						)
-
+				self._check_camel_case_function(node, invalid_names)
 			elif isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store):
-				if node in self.tree.body:
-					continue
-				name = node.id
-				if name.startswith("_") or name.isupper() or name in IGNORED_ARGUMENTS:
-					continue
-				if not CAMEL_CASE_PATTERN.fullmatch(name):
-					invalid_names.add(
-						_("line {line_no}: variable '{name}'").format(
-							line_no=node.lineno, name=name
-						)
-					)
+				self._check_camel_case_variable(node, invalid_names)
 
 		sorted_details = sorted(list(invalid_names))
 		self.details["camel_case"] = sorted_details
 		self.results["camel_case"] = not sorted_details
+
+	def _check_camel_case_function(self, node, invalid_names):
+		name = node.name
+
+		# Ignore dunder methods (e.g. __init__) and the translation function _().
+		if (name.startswith("__") and name.endswith("__")) or name == "_":
+			return
+
+		check_name = self._normalize_function_name(name)
+
+		# Ignore if the function name is empty after normalization.
+		if not check_name:
+			return
+
+		if not CAMEL_CASE_PATTERN.fullmatch(check_name):
+			invalid_names.add(
+				_("line {line_no}: function '{name}'").format(
+					line_no=node.lineno,
+					name=name,
+				),
+			)
+
+		for arg in node.args.args:
+			self._check_camel_case_argument(arg, invalid_names)
+
+	def _check_camel_case_argument(self, arg, invalid_names):
+		arg_name = arg.arg
+
+		if arg_name in IGNORED_ARGUMENTS or arg_name == "_":
+			return
+
+		check_arg = self._remove_leading_underscores(arg_name)
+
+		if not check_arg:
+			return
+
+		if not CAMEL_CASE_PATTERN.fullmatch(check_arg):
+			invalid_names.add(
+				_("line {line_no}: argument '{name}'").format(
+					line_no=arg.lineno,
+					name=arg_name,
+				),
+			)
+
+	def _check_camel_case_variable(self, node, invalid_names):
+		# Keep module-level assignments excluded from local variable validation.
+		if node in self.tree.body:
+			return
+
+		name = node.id
+
+		# Ignore the translation variable _, uppercase names/constants,
+		# and ignored arguments.
+		if name == "_" or name.isupper() or name in IGNORED_ARGUMENTS:
+			return
+
+		check_var = self._remove_leading_underscores(name)
+
+		if not check_var:
+			return
+
+		if not CAMEL_CASE_PATTERN.fullmatch(check_var):
+			invalid_names.add(
+				_("line {line_no}: variable '{name}'").format(
+					line_no=node.lineno,
+					name=name,
+				),
+			)
+
+	def _normalize_function_name(self, name):
+		if name.startswith("script_"):
+			name = name[7:]
+		elif name.startswith("_script_"):
+			name = name[8:]
+		elif name.startswith("event_"):
+			name = name[6:]
+		elif name.startswith("_event_"):
+			name = name[7:]
+
+		return self._remove_leading_underscores(name)
+
+	def _remove_leading_underscores(self, name):
+		while name.startswith("_"):
+			name = name[1:]
+
+		return name
 
 	def check_tabs(self):
 		indentation_found = False
@@ -235,7 +294,7 @@ class NVDAStyleChecker:
 		if invalid_lines:
 			self.details["tabs"] = [
 				_("line {line_no}: contains space(s) in indentation").format(
-					line_no=line_no
+					line_no=line_no,
 				)
 				for line_no in invalid_lines
 			]
@@ -265,9 +324,7 @@ class NVDAStyleChecker:
 
 		self.results["header"] = bool(header_lines)
 		self.details["header"] = (
-			_("Header identified.")
-			if header_lines
-			else _("No standard header identified.")
+			_("Header identified.") if header_lines else _("No standard header identified.")
 		)
 
 	def check_utf8(self):
@@ -310,9 +367,10 @@ class NVDAStyleChecker:
 						val = arg.value.strip()
 						if len(val) > 1 and not val.startswith("http") and " " in val:
 							untranslated.add(
-								_("line {line_no}: \"{value}...\"").format(
-									line_no=arg.lineno, value=val[:30]
-								)
+								_('line {line_no}: "{value}..."').format(
+									line_no=arg.lineno,
+									value=val[:30],
+								),
 							)
 
 				for keyword in node.keywords:
@@ -320,11 +378,11 @@ class NVDAStyleChecker:
 						val = keyword.value.value.strip()
 						if len(val) > 1 and not val.startswith("http") and " " in val:
 							untranslated.add(
-								_("line {line_no}: {arg}=\"{value}...\"").format(
+								_('line {line_no}: {arg}="{value}..."').format(
 									line_no=keyword.value.lineno,
 									arg=keyword.arg,
 									value=val[:30],
-								)
+								),
 							)
 
 		sorted_details = sorted(list(untranslated))
@@ -359,8 +417,12 @@ class NVDAStyleChecker:
 		output.append(_("Analyzed file: {file_path}\n").format(file_path=self.file_path))
 
 		output.append(self._format_line(_("Classes in PascalCase"), self.results["pascal_case"]))
-		output.append(self._format_line(_("Global constants in UPPER_SNAKE_CASE"), self.results["upper_snake_case"]))
-		output.append(self._format_line(_("Functions and variables in camelCase"), self.results["camel_case"]))
+		output.append(
+			self._format_line(_("Global constants in UPPER_SNAKE_CASE"), self.results["upper_snake_case"]),
+		)
+		output.append(
+			self._format_line(_("Functions and variables in camelCase"), self.results["camel_case"]),
+		)
 		output.append(self._format_line(_("Indentation using tabs"), self.results["tabs"]))
 		output.append(self._format_line(_("Presence of standard header"), self.results["header"]))
 		output.append(self._format_line(_("UTF-8 encoding declaration"), self.results["utf8"]))
@@ -398,8 +460,8 @@ class NVDAStyleChecker:
 		for item in self.details["tabs"]:
 			output.append(f"  - {item}")
 
-		output.append(_("\nHeader:\n  - {header_detail}").format(header_detail=self.details['header']))
-		output.append(_("\nEncoding:\n  - {utf8_detail}").format(utf8_detail=self.details['utf8']))
+		output.append(_("\nHeader:\n  - {header_detail}").format(header_detail=self.details["header"]))
+		output.append(_("\nEncoding:\n  - {utf8_detail}").format(utf8_detail=self.details["utf8"]))
 
 		return "\n".join(output)
 
@@ -475,8 +537,9 @@ class NVDAManifestChecker:
 			if not val:
 				self.issues.append(
 					_("Missing or empty required key: '{key}' ({description})").format(
-						key=key, description=description
-					)
+						key=key,
+						description=description,
+					),
 				)
 
 		for v_key in ("minimumNVDAVersion", "lastTestedNVDAVersion"):
@@ -484,9 +547,12 @@ class NVDAManifestChecker:
 				val = self.info[v_key].strip().strip('"').strip("'")
 				if val and not version_pattern.match(val):
 					self.issues.append(
-						_("Invalid format in '{key}': '{value}'. Expected YYYY.R pattern (e.g., 2023.3)").format(
-							key=v_key, value=val
-						)
+						_(
+							"Invalid format in '{key}': '{value}'. Expected YYYY.R pattern (e.g., 2023.3)",
+						).format(
+							key=v_key,
+							value=val,
+						),
 					)
 
 		return True, None
@@ -602,22 +668,24 @@ class MainFrame(wx.Frame):
 		self.Bind(wx.EVT_MENU, self.on_clear, id=id_accel_clear)
 		self.Bind(wx.EVT_MENU, self.on_exit, id=id_accel_exit)
 
-		accel_table = wx.AcceleratorTable([
-			(wx.ACCEL_CTRL, ord('O'), id_accel_browse),
-			(wx.ACCEL_NORMAL, wx.WXK_F5, id_accel_analyze),
-			(wx.ACCEL_ALT, ord('M'), id_accel_manifest),
-			(wx.ACCEL_ALT, ord('C'), id_accel_copy),
-			(wx.ACCEL_ALT, ord('L'), id_accel_clear),
-			(wx.ACCEL_NORMAL, wx.WXK_ESCAPE, id_accel_exit)
-		])
+		accel_table = wx.AcceleratorTable(
+			[
+				(wx.ACCEL_CTRL, ord("O"), id_accel_browse),
+				(wx.ACCEL_NORMAL, wx.WXK_F5, id_accel_analyze),
+				(wx.ACCEL_ALT, ord("M"), id_accel_manifest),
+				(wx.ACCEL_ALT, ord("C"), id_accel_copy),
+				(wx.ACCEL_ALT, ord("L"), id_accel_clear),
+				(wx.ACCEL_NORMAL, wx.WXK_ESCAPE, id_accel_exit),
+			],
+		)
 		self.SetAcceleratorTable(accel_table)
 
 	def on_browse(self, event):
 		wildcard = (
-			_("All supported (*.py; manifest.ini)|*.py;manifest.ini|") +
-			_("Python files (*.py)|*.py|") +
-			_("NVDA Manifest (manifest.ini)|manifest.ini|") +
-			_("All files (*.*)|*.*")
+			_("All supported (*.py; manifest.ini)|*.py;manifest.ini|")
+			+ _("Python files (*.py)|*.py|")
+			+ _("NVDA Manifest (manifest.ini)|manifest.ini|")
+			+ _("All files (*.*)|*.*")
 		)
 		dlg = wx.FileDialog(
 			self,
@@ -629,7 +697,7 @@ class MainFrame(wx.Frame):
 		if dlg.ShowModal() == wx.ID_OK:
 			path = dlg.GetPath()
 			self.txt_file_path.SetValue(path)
-			
+
 			if Path(path).name.lower() == "manifest.ini":
 				self.btn_manifest.SetFocus()
 			else:
@@ -654,7 +722,7 @@ class MainFrame(wx.Frame):
 		if not file_path.is_file():
 			wx.MessageBox(
 				_("The specified file was not found:\n{file_path}").format(
-					file_path=file_path_str
+					file_path=file_path_str,
 				),
 				_("File Not Found"),
 				wx.OK | wx.ICON_ERROR,
@@ -665,8 +733,10 @@ class MainFrame(wx.Frame):
 
 		if file_path.suffix.lower() != ".py":
 			wx.MessageBox(
-				_("The selected file is not a Python file (.py).\n"
-				  "To analyze manifests, use the 'Validate Manifest' button."),
+				_(
+					"The selected file is not a Python file (.py).\n"
+					"To analyze manifests, use the 'Validate Manifest' button.",
+				),
 				_("Invalid File"),
 				wx.OK | wx.ICON_WARNING,
 				self,
@@ -680,12 +750,12 @@ class MainFrame(wx.Frame):
 		if not success:
 			self.txt_report.SetValue(
 				_("FILE ANALYSIS FAILED\n\n{error_msg}").format(
-					error_msg=error_msg
-				)
+					error_msg=error_msg,
+				),
 			)
 			wx.MessageBox(
 				_("Syntax error found in the Python file.\n\n{error_msg}").format(
-					error_msg=error_msg
+					error_msg=error_msg,
 				),
 				_("Syntax Error"),
 				wx.OK | wx.ICON_ERROR,
@@ -711,9 +781,11 @@ class MainFrame(wx.Frame):
 
 		if not manifest_path.is_file():
 			wx.MessageBox(
-				_("Could not locate the 'manifest.ini' file in this folder:\n{folder}\n\n"
-				  "Ensure the add-on manifest is saved in the same directory.").format(
-					folder=manifest_path.parent
+				_(
+					"Could not locate the 'manifest.ini' file in this folder:\n{folder}\n\n"
+					"Ensure the add-on manifest is saved in the same directory.",
+				).format(
+					folder=manifest_path.parent,
 				),
 				_("Manifest Not Found"),
 				wx.OK | wx.ICON_WARNING,
@@ -728,8 +800,8 @@ class MainFrame(wx.Frame):
 		if not success:
 			self.txt_report.SetValue(
 				_("MANIFEST READING FAILED\n\n{error_msg}").format(
-					error_msg=error_msg
-				)
+					error_msg=error_msg,
+				),
 			)
 			wx.MessageBox(
 				error_msg,

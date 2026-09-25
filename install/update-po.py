@@ -32,17 +32,17 @@
 #
 #
 # -----------------------------------------------------------------------------
-"""                                
-mki18n allows you to internationalize your software.  You can use it to 
+"""
+mki18n allows you to internationalize your software.  You can use it to
 create the GNU .po files (Portable Object) and the compiled .mo files
 (Machine Object).
 
-mki18n module can be used from the command line or from within a script (see 
+mki18n module can be used from the command line or from within a script (see
 the Usage at the end of this page).
 
     Table of Contents
     -----------------
-    
+
     makePO()             -- Build the Portable Object file for the application --
     catPO()              -- Concatenate one or several PO files with the application domain files. --
     makeMO()             -- Compile the Portable Object files into the Machine Object stored in the right location. --
@@ -60,17 +60,17 @@ You can get the gettext tools from the following sites:
      libiconv  ftp site`_ and get version 1.9.1 or later. Get the Windows .ZIP
      files and install the packages inside c:/gnu. All binaries will be stored
      inside  c:/gnu/bin.  Just  put c:/gnu/bin inside your PATH. You will need
-     the following files: 
+     the following files:
 
-      - `gettext-runtime-0.12.1.bin.woe32.zip`_ 
+      - `gettext-runtime-0.12.1.bin.woe32.zip`_
       - `gettext-tools-0.12.1.bin.woe32.zip`_
-      - `libiconv-1.9.1.bin.woe32.zip`_ 
+      - `libiconv-1.9.1.bin.woe32.zip`_
 
 
 .. _GNU libiconv:                            http://www.gnu.org/software/libiconv/
 .. _GNU libiconv ftp site:                   http://www.ibiblio.org/pub/gnu/libiconv/
-.. _gettext-runtime-0.12.1.bin.woe32.zip:    ftp://ftp.gnu.org/gnu/gettext/gettext-runtime-0.12.1.bin.woe32.zip           
-.. _gettext-tools-0.12.1.bin.woe32.zip:      ftp://ftp.gnu.org/gnu/gettext/gettext-tools-0.12.1.bin.woe32.zip 
+.. _gettext-runtime-0.12.1.bin.woe32.zip:    ftp://ftp.gnu.org/gnu/gettext/gettext-runtime-0.12.1.bin.woe32.zip
+.. _gettext-tools-0.12.1.bin.woe32.zip:      ftp://ftp.gnu.org/gnu/gettext/gettext-tools-0.12.1.bin.woe32.zip
 .. _libiconv-1.9.1.bin.woe32.zip:            http://www.ibiblio.org/pub/gnu/libiconv/libiconv-1.9.1.bin.woe32.zip
 
 """
@@ -111,24 +111,24 @@ def getlanguageDict():
 def makePO(applicationDirectoryPath,  applicationDomain=None, verbose=0):
     """Build the Portable Object Template file for the application.
 
-    makePO builds the .pot file for the application stored inside 
-    a specified directory by running xgettext for all application source 
-    files.  It finds the name of all files by looking for a file called 'app.fil'. 
+    makePO builds the .pot file for the application stored inside
+    a specified directory by running xgettext for all application source
+    files.  It finds the name of all files by looking for a file called 'app.fil'.
     If this file does not exists, makePo raises an IOError exception.
     By default the application domain (the application
     name) is the same as the directory name but it can be overridden by the
     'applicationDomain' argument.
 
-    makePO always creates a new file called messages.pot.  If it finds files 
-    of the form app_xx.po where 'app' is the application name and 'xx' is one 
-    of the ISO 639 two-letter language codes, makePO resynchronizes those 
-    files with the latest extracted strings (now contained in messages.pot). 
+    makePO always creates a new file called messages.pot.  If it finds files
+    of the form app_xx.po where 'app' is the application name and 'xx' is one
+    of the ISO 639 two-letter language codes, makePO resynchronizes those
+    files with the latest extracted strings (now contained in messages.pot).
     This process updates all line location number in the language-specific
-    .po files and may also create new entries for translation (or comment out 
-    some).  The .po file is not changed, instead a new file is created with 
+    .po files and may also create new entries for translation (or comment out
+    some).  The .po file is not changed, instead a new file is created with
     the .new extension appended to the name of the .po file.
 
-    By default the function does not display what it is doing.  Set the 
+    By default the function does not display what it is doing.  Set the
     verbose argument to 1 to force it to print its commands.
     """
 
@@ -162,7 +162,8 @@ def makePO(applicationDirectoryPath,  applicationDomain=None, verbose=0):
             langPOfileName = "%s_%s.po" % (applicationName, langCode)
             if os.path.exists(langPOfileName):
                 cmd = 'msgmerge -s --no-wrap "%s" messages.pot > "%s.new"' % (
-                    langPOfileName, langPOfileName)
+                    langPOfileName, langPOfileName,
+                )
                 if verbose:
                     print(cmd)
                 os.system(cmd)
@@ -197,7 +198,8 @@ def catPO(applicationDirectoryPath, listOf_extraPo, applicationDomain=None, targ
                 for fileName in listOf_extraPo:
                     fileList += ("%s_%s.po " % (fileName, langCode))
                 cmd = "msgcat -s --no-wrap %s %s > %s.cat" % (
-                    langPOfileName, fileList, langPOfileName)
+                    langPOfileName, fileList, langPOfileName,
+                )
                 if verbose:
                     print(cmd)
                 os.system(cmd)
@@ -206,7 +208,8 @@ def catPO(applicationDirectoryPath, listOf_extraPo, applicationDomain=None, targ
                 else:
                     mo_targetDir = "%s/%s/LC_MESSAGES" % (targetDir, langCode)
                     cmd = "msgfmt --output-file=%s/%s.mo %s_%s.po.cat" % (
-                        mo_targetDir, applicationName, applicationName, langCode)
+                        mo_targetDir, applicationName, applicationName, langCode,
+                    )
                     if verbose:
                         print(cmd)
                     os.system(cmd)
@@ -221,14 +224,14 @@ def catPO(applicationDirectoryPath, listOf_extraPo, applicationDomain=None, targ
 def makeMO(applicationDirectoryPath, targetDir='./locale', applicationDomain=None, verbose=0, forceEnglish=0):
     """Compile the Portable Object files into the Machine Object stored in the right location.
 
-    makeMO converts all translated language-specific PO files located inside 
-    the  application directory into the binary .MO files stored inside the 
+    makeMO converts all translated language-specific PO files located inside
+    the  application directory into the binary .MO files stored inside the
     LC_MESSAGES sub-directory for the found locale files.
 
-    makeMO searches for all files that have a name of the form 'app_xx.po' 
-    inside the application directory specified by the first argument.  The 
-    'app' is the application domain name (that can be specified by the 
-    applicationDomain argument or is taken from the directory name). The 'xx' 
+    makeMO searches for all files that have a name of the form 'app_xx.po'
+    inside the application directory specified by the first argument.  The
+    'app' is the application domain name (that can be specified by the
+    applicationDomain argument or is taken from the directory name). The 'xx'
     corresponds to one of the ISO 639 two-letter language codes.
 
     makeMo stores the resulting files inside a sub-directory of `targetDir`
@@ -259,7 +262,8 @@ def makeMO(applicationDirectoryPath, targetDir='./locale', applicationDomain=Non
                 if not os.path.exists(mo_targetDir):
                     mkdir(mo_targetDir)
                 cmd = 'msgfmt --output-file="%s/%s.mo" "%s_%s.po"' % (
-                    mo_targetDir, applicationName, applicationName, langCode)
+                    mo_targetDir, applicationName, applicationName, langCode,
+                )
                 if verbose:
                     print(cmd)
                 os.system(cmd)
@@ -301,7 +305,7 @@ def printUsage(errorMsg=None):
     #                                                                                #
     #   You must specify one of the -p or -m option to perform the work.  You can    #
     #   specify the path of the target application.  If you leave it out mki18n      #
-    #   will use the current directory as the application main directory.            #        
+    #   will use the current directory as the application main directory.            #
     #                                                                                #
     ##################################################################################""")
     if errorMsg:
@@ -317,9 +321,9 @@ def fileBaseOf(filename, withPath=0):
     """fileBaseOf(filename,withPath) ---> string
 
     Return base name of filename.  The returned string never includes the extension.
-    Use os.path.basename() to return the basename with the extension.  The 
-    second argument is optional.  If specified and if set to 'true' (non zero) 
-    the string returned contains the full path of the file name.  Otherwise the 
+    Use os.path.basename() to return the basename with the extension.  The
+    second argument is optional.  If specified and if set to 'true' (non zero)
+    the string returned contains the full path of the file name.  Otherwise the
     path is excluded.
 
     [Example]
@@ -362,7 +366,7 @@ def mkdir(directory):
     The os.mkdir() will fail to create a directory if one of the
     directory in the specified path does not exist.  mkdir()
     solves this problem.  It creates every intermediate directory
-    required to create the final path. Under Unix, the function 
+    required to create the final path. Under Unix, the function
     only supports forward slash separator, but under Windows and MacOS
     the function supports the forward slash and the OS separator (backslash
     under windows).
@@ -408,7 +412,7 @@ def unixpath(thePath):
     'd:/test'
     >>> unixpath("d:/test/file.txt")
     'd:/test/file.txt'
-    >>> 
+    >>>
     """
     thePath = os.path.normpath(thePath)
     if os.sep == '/':
@@ -427,7 +431,8 @@ if __name__ == "__main__":
     argc = len(sys.argv)
     if argc == 1:
         printUsage(
-            'Missing argument: specify at least one of -m or -p (or both).')
+            'Missing argument: specify at least one of -m or -p (or both).',
+        )
         sys.exit(1)
     # If there is some arguments, parse the command line
     validOptions = "ehmpv"
@@ -441,7 +446,8 @@ if __name__ == "__main__":
     option['moTarget'] = None
     try:
         optionList, pargs = getopt.getopt(
-            sys.argv[1:], validOptions, validLongOptions)
+            sys.argv[1:], validOptions, validLongOptions,
+        )
     except getopt.GetoptError as e:
         printUsage(e[0])
         sys.exit(1)
@@ -469,7 +475,8 @@ if __name__ == "__main__":
         appDirPath = pargs[0]
     else:
         printUsage(
-            'Too many arguments (%u).  Use double quotes if you have space in directory name' % len(pargs))
+            'Too many arguments (%u).  Use double quotes if you have space in directory name' % len(pargs),
+        )
         sys.exit(1)
     if option['domain'] is None:
         # If no domain specified, use the name of the target directory
@@ -481,10 +488,13 @@ if __name__ == "__main__":
             makePO(appDirPath, option['domain'], option['verbose'])
         except IOError as e:
             printUsage(
-                e[1] + '\n   You must write a file app.fil that contains the list of all files to parse.')
+                e[1] + '\n   You must write a file app.fil that contains the list of all files to parse.',
+            )
     if option['mo']:
-        makeMO(appDirPath, option['moTarget'], option['domain'],
-               option['verbose'], option['forceEnglish'])
+        makeMO(
+            appDirPath, option['moTarget'], option['domain'],
+            option['verbose'], option['forceEnglish'],
+        )
     sys.exit(1)
 
 
