@@ -169,8 +169,7 @@ class NVDAManifestChecker:
 			if val and not version_pattern.match(val):
 				self.issues.append(
 					_(
-						"Invalid format in '{key}': '{value}'. "
-						"Expected YYYY.R pattern (e.g., 2023.3)",
+						"Invalid format in '{key}': '{value}'. Expected YYYY.R pattern (e.g., 2023.3)",
 					).format(
 						key=key,
 						value=val,

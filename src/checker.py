@@ -380,9 +380,7 @@ class NVDAStyleChecker:
 
 		self.results["header"] = bool(header_lines)
 		self.details["header"] = (
-			_("Header identified.")
-			if header_lines
-			else _("No standard header identified.")
+			_("Header identified.") if header_lines else _("No standard header identified.")
 		)
 
 	def check_utf8(self) -> None:
@@ -438,11 +436,7 @@ class NVDAStyleChecker:
 
 		value = node.value.strip()
 
-		if (
-			len(value) <= 1
-			or value.startswith(("http://", "https://"))
-			or " " not in value
-		):
+		if len(value) <= 1 or value.startswith(("http://", "https://")) or " " not in value:
 			return
 
 		if argument_name:

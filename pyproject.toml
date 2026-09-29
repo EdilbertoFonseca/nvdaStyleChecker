@@ -76,7 +76,6 @@ include = [
 ]
 
 exclude = [
-	".git",
 	"__pycache__",
 	".git",
 	".venv",
