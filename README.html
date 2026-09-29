@@ -1,0 +1,99 @@
+<h1>Executive Summary &amp; Technical Report: NVDA Style &amp; Manifest Checker</h1>
+<p><strong>Project:</strong> NVDA Add-on Style &amp; Manifest Checker (GUI)<br />
+<strong>Lead Developer:</strong> Edilberto Fonseca<br />
+<strong>Version:</strong> 1.0 (Production Release Candidate)<br />
+<strong>Target Environment:</strong> Microsoft Windows / NVDA Screen Reader Ecosystem</p>
+<hr />
+<h2>1. Project Overview</h2>
+<p>The <strong>NVDA Style &amp; Manifest Checker</strong> is an accessible graphical tool developed with <code>wxPython</code>. It automates the static analysis of Python source code and <code>manifest.ini</code> configuration files for NVDA add-on development, ensuring adherence to the strict coding guidelines established by the NVDA open-source community.</p>
+<hr />
+<h2>2. Completed Milestones &amp; Accomplishments</h2>
+<h3>A. Core Architecture &amp; Static Analysis Engine</h3>
+<ul>
+<li><strong>AST-Based Code Analysis (<code>NVDAStyleChecker</code>):</strong><ul>
+<li>Integrated Python’s Abstract Syntax Tree (<code>ast</code>) module to parse <code>.py</code> files without code execution.</li>
+<li>Implemented pattern validation using regular expressions:<ul>
+<li><strong>Classes:</strong> Checked for <code>PascalCase</code>.</li>
+<li><strong>Global Constants:</strong> Checked for <code>UPPER_SNAKE_CASE</code> at module level (<code>self.tree.body</code>).</li>
+<li><strong>Functions &amp; Variables:</strong> Checked for standard <code>camelCase</code> (including <code>script_</code> and <code>event_</code> prefix rules).</li>
+<li><strong>Indentation &amp; Encoding:</strong> Enforced hard tabs (no spaces) and UTF-8 header declarations.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Manifest Validation (<code>NVDAManifestChecker</code>):</strong><ul>
+<li>Parsed and validated required keys in <code>manifest.ini</code> (<code>name</code>, <code>summary</code>, <code>version</code>, <code>description</code>, <code>author</code>, <code>minimumNVDAVersion</code>, <code>lastTestedNVDAVersion</code>).</li>
+<li>Enforced versioning format compliance (e.g., <code>YYYY.R</code>).</li>
+</ul>
+</li>
+</ul>
+<h3>B. Project Internationalization (i18n)</h3>
+<ul>
+<li><strong>Codebase Refactoring to English:</strong><ul>
+<li>Converted all source code elements (comments, docstrings, internal variable names, class structures, and technical terminology) to idiomatic English.</li>
+</ul>
+</li>
+<li><strong>Gettext Infrastructure Setup:</strong><ul>
+<li>Wrapped all user-facing strings, button labels, report outputs, and dialog messages in <code>_()</code> translation functions.</li>
+<li>Established a robust fallback mechanism (<code>def _(message): return message</code>) to handle uninitialized translation domains gracefully.</li>
+</ul>
+</li>
+</ul>
+<h3>C. Build Pipeline &amp; Resource Packaging</h3>
+<ul>
+<li><strong>PyInstaller &amp; SCons Integration:</strong><ul>
+<li>Configured build scripts for executable generation (<code>.exe</code>).</li>
+<li>Resolved internal directory structure constraints (<code>_internal</code> / <code>internal</code> pathing introduced in modern PyInstaller versions).</li>
+<li>Automated dynamic path resolution via <code>sys._MEIPASS</code> to ensure compiled runtime location mapping for the <code>locale/</code> directory.</li>
+</ul>
+</li>
+<li><strong>Multi-language Locale Structure:</strong><ul>
+<li><p>Standardized translation catalog hierarchy:</p>
+<p>locale/
+└── &lt;language_code&gt;/
+└── LC_MESSAGES/
+├── nvdaStyleChecker.po
+└── nvdaStyleChecker.mo
+```</p>
+</li>
+<li><p>Configured native OS fallback to default English when a system language catalog is absent.</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>3. Technical Architecture &amp; File Map</h2>
+<p>| Component / File | Purpose | Key Responsibilities |
+| :--- | :--- | :--- |
+| <code>src/main.py</code> | Application Entry &amp; GUI | Implements accessible <code>wx.Frame</code>, keyboard shortcuts, file open dialogs, and main event loop. |
+| <code>src/locale/</code> | Localization Repository | Stores binary (<code>.mo</code>) and source (<code>.po</code>) catalogs for supported languages. |
+| <code>install/pyinstaller/*.spec</code> | PyInstaller Build Spec | Defines executable metadata, hidden imports, binary targets, and data bindings (<code>datas=[(..., 'locale')]</code>). |
+| <code>SConstruct</code> / <code>scons</code> | Automated Build Pipeline | Manages end-to-end compilation workflows and artifact generation. |</p>
+<hr />
+<h2>4. Summary Matrix of Analysis Logic</h2>
+<pre><code class="language-text">                    +--------------------------------+
+                    | Input File (.py / manifest.ini)|
+                    +---------------+----------------+
+                                    |
+            +-----------------------+-----------------------+
+            |                                               |
+   [Python Source Code]                             [manifest.ini]
+            |                                               |
+            v                                               v
+  +------------------+                            +------------------+
+  | AST Parsing Tree |                            | Key-Value Parser |
+  +--------+---------+                            +--------+---------+
+           |                                               |
+  +--------+------------------------+                      |
+  | - PascalCase (Classes)          |                      |
+  | - UPPER_SNAKE (Global Consts)   |                      |
+  | - camelCase (Functions/Vars)    |                      |
+  | - Tabs Indentation Check        |                      |
+  | - i18n _() String Marking       |                      |
+  +--------+------------------------+                      |
+           |                                               |
+           v                                               v
+  +------------------------------------------------------------------+
+  |              Unified Report Generation &amp; Formatting              |
+  +------------------------------------------------------------------+
+</code></pre>

@@ -1,0 +1,617 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 'nvdaStyleChecker' '1.0'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2026-09-11 10:54-0300\n"
+"PO-Revision-Date: 2026-09-11 14:52-0300\n"
+"Last-Translator: Edilberto Fonseca <edilberto.fonseca@outlook.com>\n"
+"Language-Team: Edilberto Fonseca <edilberto.fonseca@outlook.com>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: nvdaaddons\n"
+"X-Crowdin-Project-ID: 780748\n"
+"X-Crowdin-Language: pt-BR\n"
+"X-Crowdin-File: BMI.pot\n"
+"X-Crowdin-File-ID: 300\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: main.py\n"
+
+#: main.py:116
+#, python-brace-format
+msgid "Syntax error at line {line_no}: {error_msg}"
+msgstr "Erro de sintaxe na linha {line_no}: {error_msg}"
+
+#: main.py:129
+#, python-brace-format
+msgid "line {line_no}: class '{name}'"
+msgstr "linha {line_no}: classe '{name}'"
+
+#: main.py:153
+#, python-brace-format
+msgid "line {line_no}: global constant '{name}'"
+msgstr "linha {line_no}: constante global '{name}'"
+
+#: main.py:179
+#, python-brace-format
+msgid "line {line_no}: function '{name}'"
+msgstr "linha {line_no}: função '{name}'"
+
+#: main.py:190
+#, python-brace-format
+msgid "line {line_no}: argument '{name}'"
+msgstr "linha {line_no}: argumento '{name}'"
+
+#: main.py:203
+#, python-brace-format
+msgid "line {line_no}: variable '{name}'"
+msgstr "linha {line_no}: variável '{name}'"
+
+#: main.py:231
+#, python-brace-format
+msgid "line {line_no}: contains space(s) in indentation"
+msgstr "linha {line_no}: contém espaço(s) na indentação"
+
+#: main.py:237
+msgid "All indented lines use tabs."
+msgstr "Todas as linhas indentadas utilizam tabulações."
+
+#: main.py:239
+msgid "The file has no indented lines."
+msgstr "O arquivo não possui linhas indentadas."
+
+#: main.py:243
+msgid "Empty file."
+msgstr "Arquivo vazio."
+
+#: main.py:262
+msgid "Header identified."
+msgstr "Cabeçalho identificado."
+
+#: main.py:264
+msgid "No standard header identified."
+msgstr "Nenhum cabeçalho padrão identificado."
+
+#: main.py:279
+msgid "UTF-8 encoding declaration found."
+msgstr "Declaração de codificação UTF-8 encontrada."
+
+#: main.py:282
+msgid "UTF-8 encoding declaration not found."
+msgstr "Declaração de codificação UTF-8 não encontrada."
+
+#: main.py:307
+#, python-brace-format
+msgid "line {line_no}: \"{value}...\""
+msgstr "linha {line_no}: \"{value}...\""
+
+#: main.py:317
+#, python-brace-format
+msgid "line {line_no}: {arg}=\"{value}...\""
+msgstr "linha {line_no}: {arg}=\"{value}...\""
+
+#: main.py:351
+msgid "STYLE ANALYSIS - PYTHON FILE (.PY)"
+msgstr "ANÁLISE DE ESTILO - ARQUIVO PYTHON (.PY)"
+
+#: main.py:353 main.py:493
+#, python-brace-format
+msgid "Analyzed file: {file_path}\n"
+msgstr "Arquivo analisado: {file_path}\n"
+#: main.py:355
+msgid "Classes in PascalCase"
+msgstr "Classes em PascalCase"
+
+#: main.py:356
+msgid "Global constants in UPPER_SNAKE_CASE"
+msgstr "Constantes globais em UPPER_SNAKE_CASE"
+
+#: main.py:357
+msgid "Functions and variables in camelCase"
+msgstr "Funções e variáveis em camelCase"
+
+#: main.py:358
+msgid "Indentation using tabs"
+msgstr "Indentação usando tabulações"
+
+#: main.py:359
+msgid "Presence of standard header"
+msgstr "Presença de cabeçalho padrão"
+
+#: main.py:360
+msgid "UTF-8 encoding declaration"
+msgstr "Declaração de codificação UTF-8"
+
+#: main.py:361
+msgid "Strings marked for translation _()"
+msgstr "Strings marcadas para tradução _()"
+
+#: main.py:364
+#, python-brace-format
+msgid "Score: {points}/{total} points"
+msgstr "Pontuação: {points}/{total} pontos"
+
+#: main.py:365
+#, python-brace-format
+msgid "Compliance: {percentage:.2f}%"
+msgstr "Conformidade: {percentage:.2f}%"
+
+#: main.py:368
+msgid "ANALYSIS DETAILS"
+msgstr "DETALHES DA ANÁLISE"
+
+#: main.py:372
+msgid ""
+"\n"
+"Class names not following PascalCase:"
+msgstr ""
+"\n"
+"Nomes de classes que não seguem o padrão PascalCase:"
+
+#: main.py:377
+msgid ""
+"\n"
+"Global constants not following UPPER_SNAKE_CASE:"
+msgstr ""
+"\n"
+"Constantes globais que não seguem o padrão UPPER_SNAKE_CASE:"
+
+#: main.py:382
+msgid ""
+"\n"
+"Names not following camelCase:"
+msgstr ""
+"\n"
+"Nomes que não seguem a convenção camelCase:"
+
+#: main.py:387
+msgid ""
+"\n"
+"Strings in functions/UI without _() translation wrappers:"
+msgstr ""
+"\n"
+"Strings em funções ou interface do usuário sem envolvem o _():"
+
+#: main.py:391
+msgid ""
+"\n"
+"Indentation:"
+msgstr ""
+"\n"
+"Indentação:"
+
+#: main.py:395
+#, python-brace-format
+msgid ""
+"\n"
+"Header:\n"
+"  - {header_detail}"
+msgstr ""
+"\n"
+"Cabeçalho:\n"
+"  - {header_detail}"
+
+#: main.py:396
+#, python-brace-format
+msgid ""
+"\n"
+"Encoding:\n"
+"  - {utf8_detail}"
+msgstr ""
+"\n"
+"Codificação:\n"
+"  - {utf8_detail}"
+
+#: main.py:401
+msgid "PASSED (+1)"
+msgstr "APROVADO (+1)"
+
+#: main.py:401
+msgid "FAILED (+0)"
+msgstr "REPROVADO (+0)"
+
+#: main.py:416
+#, python-brace-format
+msgid "File not found: {file_path}"
+msgstr "Arquivo não encontrado: {file_path}"
+
+#: main.py:424
+#, python-brace-format
+msgid "Error reading file: {err}"
+msgstr "Erro ao ler o arquivo: {err}"
+
+#: main.py:426
+#, python-brace-format
+msgid "Error opening file: {err}"
+msgstr "Erro ao abrir o arquivo: {err}"
+
+#: main.py:471
+#, python-brace-format
+msgid "Missing or empty required key: '{key}' ({description})"
+msgstr "Chave obrigatória ausente ou vazia: '{key}' ({description})"
+
+#: main.py:481
+#, python-brace-format
+msgid "Invalid format in '{key}': '{value}'. Expected YYYY.R pattern (e.g., 2023.3)"
+msgstr "Formato inválido em '{key}': '{value}'. Esperava-se o padrão AAAA.R (por exemplo, 2023.3)"
+
+#: main.py:491
+msgid "MANIFEST VALIDATION (MANIFEST.INI)"
+msgstr "VALIDAÇÃO DO MANIFESTO (MANIFEST.INI)"
+
+#: main.py:496
+msgid "STATUS: COMPLIANT - The manifest contains all required keys.\n"
+msgstr "STATUS: CONFORME - O manifesto contém todas as chaves necessárias.\n"
+
+#: main.py:498
+#, python-brace-format
+msgid "STATUS: WARNING - Found {count} issue(s).\n"
+msgstr "STATUS: AVISO - Encontrados {count} problemas.\n"
+
+#: main.py:500
+msgid "IDENTIFIED KEYS:"
+msgstr "CHAVES IDENTIFICADAS:"
+
+#: main.py:508
+msgid "ISSUES FOUND"
+msgstr "PROBLEMAS ENCONTRADOS"
+
+#: main.py:523
+msgid "NVDA Add-on Checker - Code and Manifest Analyzer"
+msgstr "Verificador de complementos do NVDA - Analisador de código e manifesto"
+
+#: main.py:537
+msgid "File &Path (.py or manifest.ini):"
+msgstr "&Caminho do arquivo (.py ou manifest.ini):"
+
+#: main.py:539
+msgid "&Browse..."
+msgstr "&Procurar..."
+
+#: main.py:549
+msgid "&Analyze Code (.py)"
+msgstr "&Analisar código (.py)"
+
+#: main.py:550
+msgid "Validate &Manifest"
+msgstr "Validar &manifesto"
+
+#: main.py:551
+msgid "&Copy Report"
+msgstr "&Copiar relatório"
+
+#: main.py:552
+msgid "C&lear"
+msgstr "&Limpar"
+
+#: main.py:553
+msgid "E&xit"
+msgstr "&Sair"
+
+#: main.py:563
+msgid "Analysis &Report:"
+msgstr "Relatório de &análise:"
+
+#: main.py:611
+msgid "All supported (*.py; manifest.ini)|*.py;manifest.ini|"
+msgstr "Todos os arquivos suportados (*.py; manifest.ini)|*.py;manifest.ini|"
+
+#: main.py:612
+msgid "Python files (*.py)|*.py|"
+msgstr "Arquivos Python (*.py)|*.py|"
+
+#: main.py:613
+msgid "NVDA Manifest (manifest.ini)|manifest.ini|"
+msgstr "Manifesto do NVDA (manifest.ini)|manifest.ini|"
+
+#: main.py:614
+msgid "All files (*.*)|*.*"
+msgstr "Todos os arquivos (*.*)|*.*"
+
+#: main.py:618
+msgid "Select file to analyze"
+msgstr "Selecione o arquivo para analisar"
+
+#: main.py:639
+msgid "Please select or enter the path to a .py file."
+msgstr "Selecione ou insira o caminho para um arquivo .py."
+
+#: main.py:640
+msgid "Missing Path"
+msgstr "Caminho ausente"
+
+#: main.py:650
+#, python-brace-format
+msgid ""
+"The specified file was not found:\n"
+"{file_path}"
+msgstr ""
+"O arquivo especificado não foi encontrado:\n"
+"{file_path}"
+
+#: main.py:653
+msgid "File Not Found"
+msgstr "Arquivo não encontrado"
+
+#: main.py:662
+msgid ""
+"The selected file is not a Python file (.py).\n"
+"To analyze manifests, use the 'Validate Manifest' button."
+msgstr ""
+"O arquivo selecionado não é um arquivo Python (.py).\n"
+"Para analisar manifestos, use o botão 'Validar manifesto'."
+
+#: main.py:664
+msgid "Invalid File"
+msgstr "Arquivo inválido"
+
+#: main.py:676
+#, python-brace-format
+msgid ""
+"FILE ANALYSIS FAILED\n"
+"\n"
+"{error_msg}"
+msgstr ""
+"A ANÁLISE DO ARQUIVO FALHOU\n"
+"\n"
+"{error_msg}"
+
+#: main.py:681
+#, python-brace-format
+msgid ""
+"Syntax error found in the Python file.\n"
+"\n"
+"{error_msg}"
+msgstr ""
+"Erro de sintaxe encontrado no arquivo Python.\n"
+"\n"
+"{error_msg}"
+
+#: main.py:684
+msgid "Syntax Error"
+msgstr "Erro de sintaxe"
+
+#: main.py:708
+#, python-brace-format
+msgid ""
+"Could not locate the 'manifest.ini' file in this folder:\n"
+"{folder}\n"
+"\n"
+"Ensure the add-on manifest is saved in the same directory."
+msgstr ""
+"Não foi possível localizar o arquivo 'manifest.ini' nesta pasta:\n"
+"{folder}\n"
+"\n"
+"Certifique-se de que o manifesto do complemento esteja salvo no mesmo diretório."
+
+#: main.py:712
+msgid "Manifest Not Found"
+msgstr "Manifesto não encontrado"
+
+#: main.py:724
+#, python-brace-format
+msgid ""
+"MANIFEST READING FAILED\n"
+"\n"
+"{error_msg}"
+msgstr ""
+"A LEITURA DO MANIFESTO FALHOU\n"
+"\n"
+"{error_msg}"
+
+#: main.py:730
+msgid "Manifest Error"
+msgstr "Erro no manifesto"
+
+#: main.py:744
+msgid "No report available to copy."
+msgstr "Não há relatório disponível para copiar."
+
+#: main.py:745
+msgid "Information"
+msgstr "Informação"
+
+#: main.py:755
+msgid "Report copied to the clipboard successfully!"
+msgstr "Relatório copiado para a área de transferência com sucesso!"
+
+#: main.py:756
+msgid "Success"
+msgstr "Sucesso"
+
+#~ msgid "Height and weight must be greater than zero."
+#~ msgstr "A altura e o peso devem ser maiores que zero."
+
+#~ msgid "Enter or select your height in centimeters:"
+#~ msgstr "Insira ou selecione sua altura em centímetros:"
+
+#~ msgid "Enter or select your weight in kilograms:"
+#~ msgstr "Insira ou selecione seu peso em quilogramas:"
+
+#~ msgid "C&alculate"
+#~ msgstr "C&alcular"
+
+#~ msgid "&History"
+#~ msgstr "&Histórico"
+
+#~ msgid "&Cancel"
+#~ msgstr "&Cancelar"
+
+#~ msgid "Attention"
+#~ msgstr "Atenção"
+
+#~ msgid "Unable to calculate BMI. Please check the values."
+#~ msgstr "Não é possível calcular o IMC. Por favor verifique os valores."
+
+#, python-brace-format
+#~ msgid "Ideal weight range for your height: {} kg to {} kg."
+#~ msgstr "Faixa de peso ideal para sua altura: {} kg a {} kg."
+
+#~ msgid ""
+#~ "Observation:\n"
+#~ "\n"
+#~ "For an accurate interpretation of BMI, it is important to consider other factors such as\n"
+#~ "body composition, fat distribution, age, gender, and overall health.\n"
+#~ "\n"
+#~ "It is always recommended to consult a healthcare professional for proper guidance on health and weight."
+#~ msgstr ""
+#~ "Observação:\n"
+#~ "\n"
+#~ "Para uma interpretação precisa do IMC, é importante considerar outros fatores, como\n"
+#~ "composição corporal, distribuição de gordura, idade, sexo e saúde geral.\n"
+#~ "\n"
+#~ "É sempre recomendável consultar um profissional de saúde para orientações adequadas sobre saúde e peso."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your BMI is {}.\n"
+#~ "\n"
+#~ "You are underweight.\n"
+#~ "\n"
+#~ "It is important to consult a doctor or nutritionist to identify healthy ways to gain weight.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+#~ msgstr ""
+#~ "Seu IMC é {}.\n"
+#~ "\n"
+#~ "Você está abaixo do peso.\n"
+#~ "\n"
+#~ "É importante consultar um médico ou nutricionista para identificar formas saudáveis de ganhar peso.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your BMI is {}.\n"
+#~ "\n"
+#~ "You are at a healthy weight.\n"
+#~ "\n"
+#~ "Maintain it with a balanced diet and regular physical activity.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+#~ msgstr ""
+#~ "Seu IMC é {}.\n"
+#~ "\n"
+#~ "Você está com um peso saudável.\n"
+#~ "\n"
+#~ "Mantenha-o com uma dieta balanceada e atividade física regular.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your BMI is {}.\n"
+#~ "\n"
+#~ "You are overweight.\n"
+#~ "\n"
+#~ "It is important to consult a doctor or nutritionist to identify healthy weight loss strategies.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+#~ msgstr ""
+#~ "Seu IMC é {}.\n"
+#~ "\n"
+#~ "Você está acima do peso.\n"
+#~ "\n"
+#~ "É importante consultar um médico ou nutricionista para identificar estratégias saudáveis de perda de peso.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your BMI is {}.\n"
+#~ "\n"
+#~ "You are significantly overweight.\n"
+#~ "\n"
+#~ "Please consult a healthcare provider for guidance.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+#~ msgstr ""
+#~ "Seu IMC é {}.\n"
+#~ "\n"
+#~ "Você está significativamente acima do peso.\n"
+#~ "\n"
+#~ "Consulte um profissional de saúde para obter orientação.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your BMI is {}.\n"
+#~ "\n"
+#~ "Your BMI indicates that you are in the obese range.\n"
+#~ "\n"
+#~ "It is important to consult a doctor to reduce health risks through safe weight loss.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+#~ msgstr ""
+#~ "Seu IMC é {}.\n"
+#~ "\n"
+#~ "Seu IMC indica que você está na faixa de obesidade.\n"
+#~ "\n"
+#~ "É importante consultar um médico para reduzir os riscos à saúde por meio da perda de peso segura.\n"
+#~ "\n"
+#~ "{}\n"
+#~ "\n"
+#~ "{}"
+
+#~ msgid "No history found."
+#~ msgstr "Nenhum histórico encontrado."
+
+#~ msgid "History"
+#~ msgstr "Histórico"
+
+#~ msgid ""
+#~ "Last 10 BMI calculations:\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Últimos 10 cálculos de IMC:\n"
+#~ "\n"
+
+#, python-brace-format
+#~ msgid "Date: {} | Height: {} cm | Weight: {} kg | BMI: {}\n"
+#~ msgstr "Data: {} | Altura: {} cm | Peso: {} kg | IMC: {}\n"
+
+#~ msgid "&Calculate your BMI..."
+#~ msgstr "&Calcule seu IMC..."
+
+#~ msgid "BMI - This add-on calculates the Body Mass Index."
+#~ msgstr "IMC - Este complemento calcula o Índice de Massa Corporal."
+
+#~ msgid "Calculation of the Body Mass Index."
+#~ msgstr "Cálculo do Índice de Massa Corporal."
+
+#~ msgid "Calculate your BMI"
+#~ msgstr "Calcule seu IMC"
+
+#~ msgid ""
+#~ "This add-on calculates the Body Mass Index.\n"
+#~ "\n"
+#~ "Shortcut: Windows+Alt+I."
+#~ msgstr ""
+#~ "Este complemento calcula o Índice de Massa Corporal.\n"
+#~ "\n"
+#~ "Atalho: Windows+Alt+I."
+
+#~ msgid "The new translation system via Crowdin has been integrated and the localization files have been updated."
+#~ msgstr "O novo sistema de tradução via Crowdin foi integrado e os arquivos de localização foram atualizados."
