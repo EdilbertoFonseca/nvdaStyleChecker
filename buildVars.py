@@ -31,7 +31,7 @@ def _(arg: str) -> str:
 
 # Application information
 app_info = {
-	"app_name": "nvdaStyleChecker,",
+	"app_name": "nvdaStyleChecker",
 	"app_summary": _("System for code validations"),
 	"app_description": _(
 		"System for checking add-on code and performing validation",

@@ -1,7 +1,7 @@
 [project]
-name = "apptemplate"
+name = "nvdaStyleChecker"
 version = "1.1.0"
-description = "A template for creating Python desktop applications."
+description = "System for checking add-on code and performing validation"
 requires-python = "==3.13.*"
 dependencies = [
 	"wxPython>=4.2.3,<5",
@@ -72,11 +72,13 @@ typeCheckingMode = "strict"
 
 include = [
 	"**/*.py",
+	"src",
 ]
 
 exclude = [
 	".git",
 	"__pycache__",
+	"install",
 ]
 
 extraPaths = [
@@ -92,4 +94,21 @@ strictDictionaryInference = true
 strictSetInference = true
 
 reportDeprecated = true
+
+# wxPython accepts runtime coercions (e.g. size=(w, h), parent=Panel),
+# but its type stubs do not fully reflect this behavior.
+reportArgumentType = false
+
+# wxPython methods (e.g. Add, Append, prePopup) return values that are
+# intentionally ignored; the side effects are what matter.
+reportUnusedCallResult = false
+
+# wxPython is bundled with NVDA and does not ship with official type stubs.
+# Pyright cannot resolve wx types in a standard environment.
 reportMissingTypeStubs = false
+reportUnknownMemberType = false
+
+reportAttributeAccessIssue = false
+reportImportCycles = false
+reportUntypedBaseClass = false
+reportUntypedFunctionDecorator = false

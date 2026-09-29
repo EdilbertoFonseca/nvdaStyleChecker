@@ -40,15 +40,15 @@ create the GNU .po files (Portable Object) and the compiled .mo files
 mki18n module can be used from the command line or from within a script (see
 the Usage at the end of this page).
 
-    Table of Contents
-    -----------------
+	Table of Contents
+	-----------------
 
-    makePO()             -- Build the Portable Object file for the application --
-    catPO()              -- Concatenate one or several PO files with the application domain files. --
-    makeMO()             -- Compile the Portable Object files into the Machine Object stored in the right location. --
-    printUsage           -- Displays how to use this script from the command line --
+	makePO()             -- Build the Portable Object file for the application --
+	catPO()              -- Concatenate one or several PO files with the application domain files. --
+	makeMO()             -- Compile the Portable Object files into the Machine Object stored in the right location. --
+	printUsage           -- Displays how to use this script from the command line --
 
-    Scriptexecution      -- Runs when invoked from the command line --
+	Scriptexecution      -- Runs when invoked from the command line --
 
 
 NOTE:  this module uses GNU gettext utilities.
@@ -56,15 +56,15 @@ NOTE:  this module uses GNU gettext utilities.
 You can get the gettext tools from the following sites:
 
    - `GNU FTP site for gettetx`_ where several versions (0.10.40, 0.11.2, 0.11.5 and 0.12.1) are available.
-     Note  that you need to use `GNU libiconv`_ to use this. Get it from the `GNU
-     libiconv  ftp site`_ and get version 1.9.1 or later. Get the Windows .ZIP
-     files and install the packages inside c:/gnu. All binaries will be stored
-     inside  c:/gnu/bin.  Just  put c:/gnu/bin inside your PATH. You will need
-     the following files:
+	 Note  that you need to use `GNU libiconv`_ to use this. Get it from the `GNU
+	 libiconv  ftp site`_ and get version 1.9.1 or later. Get the Windows .ZIP
+	 files and install the packages inside c:/gnu. All binaries will be stored
+	 inside  c:/gnu/bin.  Just  put c:/gnu/bin inside your PATH. You will need
+	 the following files:
 
-      - `gettext-runtime-0.12.1.bin.woe32.zip`_
-      - `gettext-tools-0.12.1.bin.woe32.zip`_
-      - `libiconv-1.9.1.bin.woe32.zip`_
+	  - `gettext-runtime-0.12.1.bin.woe32.zip`_
+	  - `gettext-tools-0.12.1.bin.woe32.zip`_
+	  - `libiconv-1.9.1.bin.woe32.zip`_
 
 
 .. _GNU libiconv:                            http://www.gnu.org/software/libiconv/
@@ -76,14 +76,16 @@ You can get the gettext tools from the following sites:
 """
 # -----------------------------------------------------------------------------
 # Module Import
-# -------------
+# -----------------------------------------------------------------------------
 #
 import os
 import sys
+
 import wx
+
 # -----------------------------------------------------------------------------
 # Global variables
-# ----------------
+# -----------------------------------------------------------------------------
 #
 
 __author__ = "Pierre Rouleau"
@@ -93,14 +95,15 @@ __version__ = "$Revision: 1.5 $"
 
 
 def getlanguageDict():
-    languageDict = {}
+	languageDict = {}
 
-    for lang in [x for x in dir(wx) if x.startswith("LANGUAGE")]:
-        i = wx.Locale(wx.LANGUAGE_DEFAULT).GetLanguageInfo(getattr(wx, lang))
-        if i:
-            languageDict[i.CanonicalName] = i.Description
+	for lang in [x for x in dir(wx) if x.startswith("LANGUAGE")]:
+		i = wx.Locale(wx.LANGUAGE_DEFAULT).GetLanguageInfo(getattr(wx, lang))
+		if i:
+			languageDict[i.CanonicalName] = i.Description
 
-    return languageDict
+	return languageDict
+
 
 # -----------------------------------------------------------------------------
 # m a k e P O ( )         -- Build the Portable Object file for the application --
@@ -108,66 +111,76 @@ def getlanguageDict():
 #
 
 
-def makePO(applicationDirectoryPath,  applicationDomain=None, verbose=0):
-    """Build the Portable Object Template file for the application.
+def makePO(applicationDirectoryPath, applicationDomain=None, verbose=0):
+	"""Build the Portable Object Template file for the application.
 
-    makePO builds the .pot file for the application stored inside
-    a specified directory by running xgettext for all application source
-    files.  It finds the name of all files by looking for a file called 'app.fil'.
-    If this file does not exists, makePo raises an IOError exception.
-    By default the application domain (the application
-    name) is the same as the directory name but it can be overridden by the
-    'applicationDomain' argument.
+	makePO builds the .pot file for the application stored inside
+	a specified directory by running xgettext for all application source
+	files.  It finds the name of all files by looking for a file called 'app.fil'.
+	If this file does not exists, makePo raises an IOError exception.
+	By default the application domain (the application
+	name) is the same as the directory name but it can be overridden by the
+	'applicationDomain' argument.
 
-    makePO always creates a new file called messages.pot.  If it finds files
-    of the form app_xx.po where 'app' is the application name and 'xx' is one
-    of the ISO 639 two-letter language codes, makePO resynchronizes those
-    files with the latest extracted strings (now contained in messages.pot).
-    This process updates all line location number in the language-specific
-    .po files and may also create new entries for translation (or comment out
-    some).  The .po file is not changed, instead a new file is created with
-    the .new extension appended to the name of the .po file.
+	makePO always creates a new file called messages.pot.  If it finds files
+	of the form app_xx.po where 'app' is the application name and 'xx' is one
+	of the ISO 639 two-letter language codes, makePO resynchronizes those
+	files with the latest extracted strings (now contained in messages.pot).
+	This process updates all line location number in the language-specific
+	.po files and may also create new entries for translation (or comment out
+	some).  The .po file is not changed, instead a new file is created with
+	the .new extension appended to the name of the .po file.
 
-    By default the function does not display what it is doing.  Set the
-    verbose argument to 1 to force it to print its commands.
-    """
+	By default the function does not display what it is doing.  Set the
+	verbose argument to 1 to force it to print its commands.
+	"""
 
-    if applicationDomain is None:
-        applicationName = fileBaseOf(applicationDirectoryPath, withPath=0)
-    else:
-        applicationName = applicationDomain
-    currentDir = os.getcwd()
-    os.chdir(applicationDirectoryPath)
-    if not os.path.exists('app.fil'):
-        raise IOError(2, 'No module file: app.fil')
+	if applicationDomain is None:
+		applicationName = fileBaseOf(applicationDirectoryPath, withPath=0)
+	else:
+		applicationName = applicationDomain
 
-    # Steps:
-    #  Use xgettext to parse all application modules
-    #  The following switches are used:
-    #
-    #   -s                          : sort output by string content (easier to use when we need to merge several .po files)
-    #   --files-from=app.fil        : The list of files is taken from the file: app.fil
-    #   --output=                   : specifies the name of the output file (using a .pot extension)
-    cmd = 'xgettext -s --no-wrap --files-from=app.fil --output=messages.pot'
-    if verbose:
-        print(cmd)
-    os.system(cmd)
+	currentDir = os.getcwd()
+	os.chdir(applicationDirectoryPath)
 
-    languageDict = getlanguageDict()
+	if not os.path.exists("app.fil"):
+		raise IOError(2, "No module file: app.fil")
 
-    for langCode in list(languageDict.keys()):
-        if langCode == 'en':
-            pass
-        else:
-            langPOfileName = "%s_%s.po" % (applicationName, langCode)
-            if os.path.exists(langPOfileName):
-                cmd = 'msgmerge -s --no-wrap "%s" messages.pot > "%s.new"' % (
-                    langPOfileName, langPOfileName,
-                )
-                if verbose:
-                    print(cmd)
-                os.system(cmd)
-    os.chdir(currentDir)
+	# Steps:
+	#  Use xgettext to parse all application modules
+	#  The following switches are used:
+	#
+	#   -s                          : sort output by string content (easier to use when we need to merge several .po files)
+	#   --files-from=app.fil        : The list of files is taken from the file: app.fil
+	#   --output=                   : specifies the name of the output file (using a .pot extension)
+	cmd = "xgettext -s --no-wrap --files-from=app.fil --output=messages.pot"
+
+	if verbose:
+		print(cmd)
+
+	os.system(cmd)
+
+	languageDict = getlanguageDict()
+
+	for langCode in list(languageDict.keys()):
+		if langCode == "en":
+			pass
+		else:
+			langPOfileName = "%s_%s.po" % (applicationName, langCode)
+
+			if os.path.exists(langPOfileName):
+				cmd = 'msgmerge -s --no-wrap "%s" messages.pot > "%s.new"' % (
+					langPOfileName,
+					langPOfileName,
+				)
+
+				if verbose:
+					print(cmd)
+
+				os.system(cmd)
+
+	os.chdir(currentDir)
+
 
 # -----------------------------------------------------------------------------
 # c a t P O ( )         -- Concatenate one or several PO files with the application domain files. --
@@ -176,44 +189,60 @@ def makePO(applicationDirectoryPath,  applicationDomain=None, verbose=0):
 
 
 def catPO(applicationDirectoryPath, listOf_extraPo, applicationDomain=None, targetDir=None, verbose=0):
-    """Concatenate one or several PO files with the application domain files.
-    """
+	"""Concatenate one or several PO files with the application domain files.
+	"""
 
-    if applicationDomain is None:
-        applicationName = fileBaseOf(applicationDirectoryPath, withPath=0)
-    else:
-        applicationName = applicationDomain
-    currentDir = os.getcwd()
-    os.chdir(applicationDirectoryPath)
+	if applicationDomain is None:
+		applicationName = fileBaseOf(applicationDirectoryPath, withPath=0)
+	else:
+		applicationName = applicationDomain
 
-    languageDict = getlanguageDict()
+	currentDir = os.getcwd()
+	os.chdir(applicationDirectoryPath)
 
-    for langCode in list(languageDict.keys()):
-        if langCode == 'en':
-            pass
-        else:
-            langPOfileName = "%s_%s.po" % (applicationName, langCode)
-            if os.path.exists(langPOfileName):
-                fileList = ''
-                for fileName in listOf_extraPo:
-                    fileList += ("%s_%s.po " % (fileName, langCode))
-                cmd = "msgcat -s --no-wrap %s %s > %s.cat" % (
-                    langPOfileName, fileList, langPOfileName,
-                )
-                if verbose:
-                    print(cmd)
-                os.system(cmd)
-                if targetDir is None:
-                    pass
-                else:
-                    mo_targetDir = "%s/%s/LC_MESSAGES" % (targetDir, langCode)
-                    cmd = "msgfmt --output-file=%s/%s.mo %s_%s.po.cat" % (
-                        mo_targetDir, applicationName, applicationName, langCode,
-                    )
-                    if verbose:
-                        print(cmd)
-                    os.system(cmd)
-    os.chdir(currentDir)
+	languageDict = getlanguageDict()
+
+	for langCode in list(languageDict.keys()):
+		if langCode == "en":
+			pass
+		else:
+			langPOfileName = "%s_%s.po" % (applicationName, langCode)
+
+			if os.path.exists(langPOfileName):
+				fileList = ""
+
+				for fileName in listOf_extraPo:
+					fileList += "%s_%s.po " % (fileName, langCode)
+
+				cmd = "msgcat -s --no-wrap %s %s > %s.cat" % (
+					langPOfileName,
+					fileList,
+					langPOfileName,
+				)
+
+				if verbose:
+					print(cmd)
+
+				os.system(cmd)
+
+				if targetDir is None:
+					pass
+				else:
+					mo_targetDir = "%s/%s/LC_MESSAGES" % (targetDir, langCode)
+					cmd = "msgfmt --output-file=%s/%s.mo %s_%s.po.cat" % (
+						mo_targetDir,
+						applicationName,
+						applicationName,
+						langCode,
+					)
+
+					if verbose:
+						print(cmd)
+
+					os.system(cmd)
+
+	os.chdir(currentDir)
+
 
 # -----------------------------------------------------------------------------
 # m a k e M O ( )         -- Compile the Portable Object files into the Machine Object stored in the right location. --
@@ -221,53 +250,72 @@ def catPO(applicationDirectoryPath, listOf_extraPo, applicationDomain=None, targ
 #
 
 
-def makeMO(applicationDirectoryPath, targetDir='./locale', applicationDomain=None, verbose=0, forceEnglish=0):
-    """Compile the Portable Object files into the Machine Object stored in the right location.
+def makeMO(
+	applicationDirectoryPath,
+	targetDir: str | None = "./locale",
+	applicationDomain=None,
+	verbose=0,
+	forceEnglish=0,
+):
+	"""Compile the Portable Object files into the Machine Object stored in the right location.
 
-    makeMO converts all translated language-specific PO files located inside
-    the  application directory into the binary .MO files stored inside the
-    LC_MESSAGES sub-directory for the found locale files.
+	makeMO converts all translated language-specific PO files located inside
+	the  application directory into the binary .MO files stored inside the
+	LC_MESSAGES sub-directory for the found locale files.
 
-    makeMO searches for all files that have a name of the form 'app_xx.po'
-    inside the application directory specified by the first argument.  The
-    'app' is the application domain name (that can be specified by the
-    applicationDomain argument or is taken from the directory name). The 'xx'
-    corresponds to one of the ISO 639 two-letter language codes.
+	makeMO searches for all files that have a name of the form 'app_xx.po'
+	inside the application directory specified by the first argument.  The
+	'app' is the application domain name (that can be specified by the
+	applicationDomain argument or is taken from the directory name). The 'xx'
+	corresponds to one of the ISO 639 two-letter language codes.
 
-    makeMo stores the resulting files inside a sub-directory of `targetDir`
-    called xx/LC_MESSAGES where 'xx' corresponds to the 2-letter language
-    code.
-    """
-    if targetDir is None:
-        targetDir = './locale'
-    if verbose:
-        print("Target directory for .mo files is: %s" % targetDir)
+	makeMo stores the resulting files inside a sub-directory of `targetDir`
+	called xx/LC_MESSAGES where 'xx' corresponds to the 2-letter language
+	code.
+	"""
 
-    if applicationDomain is None:
-        applicationName = fileBaseOf(applicationDirectoryPath, withPath=0)
-    else:
-        applicationName = applicationDomain
-    currentDir = os.getcwd()
-    os.chdir(applicationDirectoryPath)
+	if targetDir is None:
+		targetDir = "./locale"
 
-    languageDict = getlanguageDict()
+	if verbose:
+		print("Target directory for .mo files is: %s" % targetDir)
 
-    for langCode in list(languageDict.keys()):
-        if (langCode == 'en') and (forceEnglish == 0):
-            pass
-        else:
-            langPOfileName = "%s_%s.po" % (applicationName, langCode)
-            if os.path.exists(langPOfileName):
-                mo_targetDir = "%s/%s/LC_MESSAGES" % (targetDir, langCode)
-                if not os.path.exists(mo_targetDir):
-                    mkdir(mo_targetDir)
-                cmd = 'msgfmt --output-file="%s/%s.mo" "%s_%s.po"' % (
-                    mo_targetDir, applicationName, applicationName, langCode,
-                )
-                if verbose:
-                    print(cmd)
-                os.system(cmd)
-    os.chdir(currentDir)
+	if applicationDomain is None:
+		applicationName = fileBaseOf(applicationDirectoryPath, withPath=0)
+	else:
+		applicationName = applicationDomain
+
+	currentDir = os.getcwd()
+	os.chdir(applicationDirectoryPath)
+
+	languageDict = getlanguageDict()
+
+	for langCode in list(languageDict.keys()):
+		if (langCode == "en") and (forceEnglish == 0):
+			pass
+		else:
+			langPOfileName = "%s_%s.po" % (applicationName, langCode)
+
+			if os.path.exists(langPOfileName):
+				mo_targetDir = "%s/%s/LC_MESSAGES" % (targetDir, langCode)
+
+				if not os.path.exists(mo_targetDir):
+					mkdir(mo_targetDir)
+
+				cmd = 'msgfmt --output-file="%s/%s.mo" "%s_%s.po"' % (
+					mo_targetDir,
+					applicationName,
+					applicationName,
+					langCode,
+				)
+
+				if verbose:
+					print(cmd)
+
+				os.system(cmd)
+
+	os.chdir(currentDir)
+
 
 # -----------------------------------------------------------------------------
 # p r i n t U s a g e         -- Displays how to use this script from the command line --
@@ -276,40 +324,42 @@ def makeMO(applicationDirectoryPath, targetDir='./locale', applicationDomain=Non
 
 
 def printUsage(errorMsg=None):
-    """Displays how to use this script from the command line."""
-    print("""
-    ##################################################################################
-    #   mki18n :   Make internationalization files.                                  #
-    #              Uses the GNU gettext system to create PO (Portable Object) files  #
-    #              from source code, coimpile PO into MO (Machine Object) files.     #
-    #              Supports C,C++,Python source files.                               #
-    #                                                                                #
-    #   Usage: mki18n {OPTION} [appDirPath]                                          #
-    #                                                                                #
-    #   Options:                                                                     #
-    #     -e               : When -m is used, forces English .mo file creation       #
-    #     -h               : prints this help                                        #
-    #     -m               : make MO from existing PO files                          #
-    #     -p               : make PO, update PO files: Creates a new messages.pot    #
-    #                        file. Creates a dom_xx.po.new for every existing        #
-    #                        language specific .po file. ('xx' stands for the ISO639 #
-    #                        two-letter language code and 'dom' stands for the       #
-    #                        application domain name).  mki18n requires that you     #
-    #                        write a 'app.fil' file  which contains the list of all  #
-    #                        source code to parse.                                   #
-    #     -v               : verbose (prints comments while running)                 #
-    #     --domain=appName : specifies the application domain name.  By default      #
-    #                        the directory name is used.                             #
-    #     --moTarget=dir : specifies the directory where .mo files are stored.       #
-    #                      If not specified, the target is './locale'                #
-    #                                                                                #
-    #   You must specify one of the -p or -m option to perform the work.  You can    #
-    #   specify the path of the target application.  If you leave it out mki18n      #
-    #   will use the current directory as the application main directory.            #
-    #                                                                                #
-    ##################################################################################""")
-    if errorMsg:
-        print("\n   ERROR: %s" % errorMsg)
+	"""Displays how to use this script from the command line."""
+	print("""
+	##################################################################################
+	#   mki18n :   Make internationalization files.                                  #
+	#              Uses the GNU gettext system to create PO (Portable Object) files  #
+	#              from source code, coimpile PO into MO (Machine Object) files.     #
+	#              Supports C,C++,Python source files.                               #
+	#                                                                                #
+	#   Usage: mki18n {OPTION} [appDirPath]                                          #
+	#                                                                                #
+	#   Options:                                                                     #
+	#     -e               : When -m is used, forces English .mo file creation       #
+	#     -h               : prints this help                                        #
+	#     -m               : make MO from existing PO files                          #
+	#     -p               : make PO, update PO files: Creates a new messages.pot    #
+	#                        file. Creates a dom_xx.po.new for every existing        #
+	#                        language specific .po file. ('xx' stands for the ISO639 #
+	#                        two-letter language code and 'dom' stands for the       #
+	#                        application domain name).  mki18n requires that you     #
+	#                        write a 'app.fil' file  which contains the list of all  #
+	#                        source code to parse.                                   #
+	#     -v               : verbose (prints comments while running)                 #
+	#     --domain=appName : specifies the application domain name.  By default      #
+	#                        the directory name is used.                             #
+	#     --moTarget=dir : specifies the directory where .mo files are stored.       #
+	#                      If not specified, the target is './locale'                #
+	#                                                                                #
+	#   You must specify one of the -p or -m option to perform the work.  You can    #
+	#   specify the path of the target application.  If you leave it out mki18n      #
+	#   will use the current directory as the application main directory.            #
+	#                                                                                #
+	##################################################################################""")
+
+	if errorMsg:
+		print("\n   ERROR: %s" % errorMsg)
+
 
 # -----------------------------------------------------------------------------
 # f i l e B a s e O f ( )         -- Return base name of filename --
@@ -318,42 +368,46 @@ def printUsage(errorMsg=None):
 
 
 def fileBaseOf(filename, withPath=0):
-    """fileBaseOf(filename,withPath) ---> string
+	"""fileBaseOf(filename,withPath) ---> string
 
-    Return base name of filename.  The returned string never includes the extension.
-    Use os.path.basename() to return the basename with the extension.  The
-    second argument is optional.  If specified and if set to 'true' (non zero)
-    the string returned contains the full path of the file name.  Otherwise the
-    path is excluded.
+	Return base name of filename.  The returned string never includes the extension.
+	Use os.path.basename() to return the basename with the extension.  The
+	second argument is optional.  If specified and if set to 'true' (non zero)
+	the string returned contains the full path of the file name.  Otherwise the
+	path is excluded.
 
-    [Example]
-    >>> fn = 'd:/dev/telepath/tvapp/code/test.html'
-    >>> fileBaseOf(fn)
-    'test'
-    >>> fileBaseOf(fn)
-    'test'
-    >>> fileBaseOf(fn,1)
-    'd:/dev/telepath/tvapp/code/test'
-    >>> fileBaseOf(fn,0)
-    'test'
-    >>> fn = 'abcdef'
-    >>> fileBaseOf(fn)
-    'abcdef'
-    >>> fileBaseOf(fn,1)
-    'abcdef'
-    >>> fn = "abcdef."
-    >>> fileBaseOf(fn)
-    'abcdef'
-    >>> fileBaseOf(fn,1)
-    'abcdef'
-    """
-    pos = filename.rfind('.')
-    if pos > 0:
-        filename = filename[:pos]
-    if withPath:
-        return filename
-    else:
-        return os.path.basename(filename)
+	[Example]
+	>>> fn = 'd:/dev/telepath/tvapp/code/test.html'
+	>>> fileBaseOf(fn)
+	'test'
+	>>> fileBaseOf(fn)
+	'test'
+	>>> fileBaseOf(fn,1)
+	'd:/dev/telepath/tvapp/code/test'
+	>>> fileBaseOf(fn,0)
+	'test'
+	>>> fn = 'abcdef'
+	>>> fileBaseOf(fn)
+	'abcdef'
+	>>> fileBaseOf(fn,1)
+	'abcdef'
+	>>> fn = "abcdef."
+	>>> fileBaseOf(fn)
+	'abcdef'
+	>>> fileBaseOf(fn,1)
+	'abcdef'
+	"""
+	pos = filename.rfind(".")
+
+	if pos > 0:
+		filename = filename[:pos]
+
+	if withPath:
+		return filename
+	else:
+		return os.path.basename(filename)
+
+
 # -----------------------------------------------------------------------------
 # m k d i r ( )         -- Create a directory (and possibly the entire tree) --
 # ^^^^^^^^^^^^^
@@ -361,42 +415,50 @@ def fileBaseOf(filename, withPath=0):
 
 
 def mkdir(directory):
-    """Create a directory (and possibly the entire tree).
+	"""Create a directory (and possibly the entire tree).
 
-    The os.mkdir() will fail to create a directory if one of the
-    directory in the specified path does not exist.  mkdir()
-    solves this problem.  It creates every intermediate directory
-    required to create the final path. Under Unix, the function
-    only supports forward slash separator, but under Windows and MacOS
-    the function supports the forward slash and the OS separator (backslash
-    under windows).
-    """
+	The os.mkdir() will fail to create a directory if one of the
+	directory in the specified path does not exist.  mkdir()
+	solves this problem.  It creates every intermediate directory
+	required to create the final path. Under Unix, the function
+	only supports forward slash separator, but under Windows and MacOS
+	the function supports the forward slash and the OS separator (backslash
+	under windows).
+	"""
 
-    # translate the path separators
-    directory = unixpath(directory)
-    # build a list of all directory elements
-    aList = [x for x in directory.split('/') if len(x) > 0]
-    theLen = len(aList)
-    # if the first element is a Windows-style disk drive
-    # concatenate it with the first directory
-    if aList[0].endswith(':'):
-        if theLen > 1:
-            aList[1] = aList[0] + '/' + aList[1]
-            del aList[0]
-            theLen -= 1
-    # if the original directory starts at root,
-    # make sure the first element of the list
-    # starts at root too
-    if directory[0] == '/':
-        aList[0] = '/' + aList[0]
-    # Now iterate through the list, check if the
-    # directory exists and if not create it
-    theDir = ''
-    for i in range(theLen):
-        theDir += aList[i]
-        if not os.path.exists(theDir):
-            os.mkdir(theDir)
-        theDir += '/'
+	# translate the path separators
+	directory = unixpath(directory)
+
+	# build a list of all directory elements
+	aList = [x for x in directory.split("/") if len(x) > 0]
+	theLen = len(aList)
+
+	# if the first element is a Windows-style disk drive
+	# concatenate it with the first directory
+	if aList[0].endswith(":"):
+		if theLen > 1:
+			aList[1] = aList[0] + "/" + aList[1]
+			del aList[0]
+			theLen -= 1
+
+	# if the original directory starts at root,
+	# make sure the first element of the list
+	# starts at root too
+	if directory[0] == "/":
+		aList[0] = "/" + aList[0]
+
+	# Now iterate through the list, check if the
+	# directory exists and if not create it
+	theDir = ""
+
+	for i in range(theLen):
+		theDir += aList[i]
+
+		if not os.path.exists(theDir):
+			os.mkdir(theDir)
+
+		theDir += "/"
+
 
 # -----------------------------------------------------------------------------
 # u n i x p a t h ( )         -- Return a path name that contains Unix separator. --
@@ -405,20 +467,22 @@ def mkdir(directory):
 
 
 def unixpath(thePath):
-    r"""Return a path name that contains Unix separator.
+	r"""Return a path name that contains Unix separator.
 
-    [Example]
-    >>> unixpath(r"d:\test")
-    'd:/test'
-    >>> unixpath("d:/test/file.txt")
-    'd:/test/file.txt'
-    >>>
-    """
-    thePath = os.path.normpath(thePath)
-    if os.sep == '/':
-        return thePath
-    else:
-        return thePath.replace(os.sep, '/')
+	[Example]
+	>>> unixpath(r"d:\test")
+	'd:/test'
+	>>> unixpath("d:/test/file.txt")
+	'd:/test/file.txt'
+	>>>
+	"""
+	thePath = os.path.normpath(thePath)
+
+	if os.sep == "/":
+		return thePath
+	else:
+		return thePath.replace(os.sep, "/")
+
 
 # -----------------------------------------------------------------------------
 
@@ -427,81 +491,103 @@ def unixpath(thePath):
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 if __name__ == "__main__":
-    import getopt     # command line parsing
-    argc = len(sys.argv)
-    if argc == 1:
-        printUsage(
-            'Missing argument: specify at least one of -m or -p (or both).',
-        )
-        sys.exit(1)
-    # If there is some arguments, parse the command line
-    validOptions = "ehmpv"
-    validLongOptions = ['domain=', 'moTarget=']
-    option = {}
-    option['forceEnglish'] = 0
-    option['mo'] = 0
-    option['po'] = 0
-    option['verbose'] = 0
-    option['domain'] = None
-    option['moTarget'] = None
-    try:
-        optionList, pargs = getopt.getopt(
-            sys.argv[1:], validOptions, validLongOptions,
-        )
-    except getopt.GetoptError as e:
-        printUsage(e[0])
-        sys.exit(1)
-    for (opt, val) in optionList:
-        if opt == '-h':
-            printUsage()
-            sys.exit(0)
-        elif opt == '-e':
-            option['forceEnglish'] = 1
-        elif opt == '-m':
-            option['mo'] = 1
-        elif opt == '-p':
-            option['po'] = 1
-        elif opt == '-v':
-            option['verbose'] = 1
-        elif opt == '--domain':
-            option['domain'] = val
-        elif opt == '--moTarget':
-            option['moTarget'] = val
-    if len(pargs) == 0:
-        appDirPath = os.getcwd()
-        if option['verbose']:
-            print("No project directory given. Using current one:  %s" % appDirPath)
-    elif len(pargs) == 1:
-        appDirPath = pargs[0]
-    else:
-        printUsage(
-            'Too many arguments (%u).  Use double quotes if you have space in directory name' % len(pargs),
-        )
-        sys.exit(1)
-    if option['domain'] is None:
-        # If no domain specified, use the name of the target directory
-        option['domain'] = fileBaseOf(appDirPath)
-    if option['verbose']:
-        print("Application domain used is: '%s'" % option['domain'])
-    if option['po']:
-        try:
-            makePO(appDirPath, option['domain'], option['verbose'])
-        except IOError as e:
-            printUsage(
-                e[1] + '\n   You must write a file app.fil that contains the list of all files to parse.',
-            )
-    if option['mo']:
-        makeMO(
-            appDirPath, option['moTarget'], option['domain'],
-            option['verbose'], option['forceEnglish'],
-        )
-    sys.exit(1)
+	import getopt  # command line parsing
+
+	argc = len(sys.argv)
+
+	if argc == 1:
+		printUsage(
+			"Missing argument: specify at least one of -m or -p (or both).",
+		)
+		sys.exit(1)
+
+	# If there is some arguments, parse the command line
+	validOptions = "ehmpv"
+	validLongOptions = ["domain=", "moTarget="]
+	option = {}
+	option["forceEnglish"] = 0
+	option["mo"] = 0
+	option["po"] = 0
+	option["verbose"] = 0
+	option["domain"] = None
+	option["moTarget"] = None
+
+	try:
+		optionList, pargs = getopt.getopt(
+			sys.argv[1:],
+			validOptions,
+			validLongOptions,
+		)
+	except getopt.GetoptError as e:
+		printUsage(e.msg)
+		sys.exit(1)
+
+	for opt, val in optionList:
+		if opt == "-h":
+			printUsage()
+			sys.exit(0)
+		elif opt == "-e":
+			option["forceEnglish"] = 1
+		elif opt == "-m":
+			option["mo"] = 1
+		elif opt == "-p":
+			option["po"] = 1
+		elif opt == "-v":
+			option["verbose"] = 1
+		elif opt == "--domain":
+			option["domain"] = val
+		elif opt == "--moTarget":
+			option["moTarget"] = val
+
+	if len(pargs) == 0:
+		appDirPath = os.getcwd()
+
+		if option["verbose"]:
+			print("No project directory given. Using current one:  %s" % appDirPath)
+
+	elif len(pargs) == 1:
+		appDirPath = pargs[0]
+
+	else:
+		printUsage(
+			"Too many arguments (%u).  Use double quotes if you have space in directory name"
+			% len(pargs),
+		)
+		sys.exit(1)
+
+	if option["domain"] is None:
+		# If no domain specified, use the name of the target directory
+		option["domain"] = fileBaseOf(appDirPath)
+
+	if option["verbose"]:
+		print("Application domain used is: '%s'" % option["domain"])
+
+	if option["po"]:
+		try:
+			makePO(appDirPath, option["domain"], option["verbose"])
+		except IOError as e:
+			error_message = e.strerror or str(e)
+			printUsage(
+				error_message
+				+ "\n   You must write a file app.fil that contains the list of all files to parse.",
+			)
+
+	if option["mo"]:
+		makeMO(
+			appDirPath,
+			option["moTarget"],
+			option["domain"],
+			option["verbose"],
+			option["forceEnglish"],
+		)
+
+	sys.exit(1)
 
 
 # -----------------------------------------------------------------------------
 
-if __name__ == '__main__':
-    for p, ds, fs in os.walk(''):
-        for f in fs:
-            if os.path.splitext(f)[1] == '.py':
-                print('P', os.path.join(p, f))
+if __name__ == "__main__":
+	for p, ds, fs in os.walk(""):
+		for f in fs:
+			if os.path.splitext(f)[1] == ".py":
+				print("P", os.path.join(p, f))

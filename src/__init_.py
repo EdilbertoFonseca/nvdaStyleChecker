@@ -15,18 +15,3 @@ All AI-generated code was manually reviewed and tested by the author.
 
 Created on: 28/09/2026
 """
-
-import wx
-
-from gui import MainFrame
-
-
-def main() -> None:
-	app = wx.App(False)
-	frame = MainFrame()
-	frame.Show()
-	app.MainLoop()
-
-
-if __name__ == "__main__":
-	main()
